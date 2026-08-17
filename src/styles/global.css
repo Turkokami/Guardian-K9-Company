@@ -1,16 +1,39 @@
 /* Guardian K9 — design tokens. Build plan 1.6.
-   Rebrand is a token swap, never a component rewrite (Keystone individuality guardrail). */
+   Rebrand is a token swap, never a component rewrite (Keystone individuality guardrail).
+
+   PALETTE (client direction, 2026-08-17): Tiffany blue, black, gold.
+   Only `--muted` is referenced from inside .astro components; every other token is
+   consumed here, so the palette can be re-cut again without touching a component.
+
+   Contrast discipline — the brand colours are not interchangeable with their text roles:
+     · --tiffany (#0abab5) is a SURFACE and ACCENT colour. It fails contrast as body text
+       on white, so text and links use --tiffany-deep instead.
+     · --gold is a SURFACE colour. Gold text on white fails; gold surfaces take black text.
+     · Anything sitting on black uses the bright variants. */
 
 :root{
-  --navy:#101f2c;        /* primary */
-  --steel:#1e3446;       /* surface */
-  --signal:#c65a1e;      /* CTA / accent — high-visibility harness webbing */
-  --signal-hi:#e0742f;
-  --bone:#f4f1ec;        /* page */
-  --verify:#2f6f4f;      /* all-clear states ONLY */
-  --ink:#15202a;
-  --muted:#5a6a78;
-  --line:#dcd7cf;
+  /* ---- brand palette -------------------------------------------------- */
+  --tiffany:#0abab5;        /* brand accent, surfaces, rules */
+  --tiffany-bright:#4fdcd7; /* on black only */
+  --tiffany-deep:#0a7a76;   /* text and links on light backgrounds */
+  --tiffany-pale:#e4f8f7;   /* tints and panel fills */
+  --gold:#c9a227;           /* CTA surfaces */
+  --gold-bright:#e2bb3d;    /* CTA hover */
+  --gold-deep:#7d6412;      /* gold-family text on light backgrounds */
+  --black:#0c0e0e;
+  --black-soft:#191d1d;
+  --off-white:#f7f6f3;
+
+  /* ---- semantic tokens (the component API — names deliberately stable) -- */
+  --navy:var(--black);       /* primary dark surface: header, hero, footer */
+  --steel:var(--black-soft); /* secondary dark surface */
+  --signal:var(--gold);      /* CTA / accent */
+  --signal-hi:var(--gold-bright);
+  --bone:var(--off-white);   /* page */
+  --verify:var(--tiffany-deep); /* all-clear and confirmed-team states */
+  --ink:#141717;
+  --muted:#5c6666;
+  --line:#dedad3;
   --white:#fff;
 
   --font-body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -30,37 +53,44 @@ h1,h2,h3,h4{font-family:var(--font-head); color:var(--navy); line-height:1.2; le
 h1{font-size:clamp(2rem,4.5vw,3rem); margin:0 0 .5em;}
 h2{font-size:clamp(1.4rem,2.6vw,1.9rem); margin:2em 0 .5em;}
 h3{font-size:1.2rem; margin:1.6em 0 .4em;}
-a{color:var(--steel);}
-a:hover{color:var(--signal);}
+a{color:var(--tiffany-deep);}
+a:hover{color:var(--gold-deep);}
+:focus-visible{outline:3px solid var(--tiffany); outline-offset:2px;}
 
 /* --- header / nav --- */
-.site-header{background:var(--navy); color:var(--bone);}
-.site-header a{color:var(--bone); text-decoration:none;}
+.site-header{background:var(--navy); color:var(--white); border-bottom:3px solid var(--tiffany);}
+.site-header a{color:var(--white); text-decoration:none;}
+.site-header a:hover{color:var(--tiffany-bright);}
 .site-header nav{display:flex; flex-wrap:wrap; gap:1.1rem; align-items:center; padding:14px 0;}
 .brand{font-weight:700; letter-spacing:.02em; margin-right:auto; display:flex; align-items:center; gap:.6rem;}
 .brand img{height:34px; width:auto;}
 
 /* --- hero --- */
-.hero{background:var(--navy); color:var(--bone); padding:56px 0 64px;}
+.hero{background:var(--navy); color:var(--white); padding:56px 0 64px;}
 .hero h1{color:var(--white); max-width:18ch;}
-.hero .lede{font-size:1.15rem; color:#c9d3dc; max-width:60ch;}
+.hero .lede{font-size:1.15rem; color:#c8d2d1; max-width:60ch;}
+.hero a{color:var(--tiffany-bright);}
 
 /* --- AEO quick answer (M4 speakable target) --- */
 .answer{
-  background:var(--white); border-left:5px solid var(--signal);
+  background:var(--white); border-left:5px solid var(--tiffany);
   padding:20px 24px; margin:28px 0; border-radius:0 6px 6px 0;
-  box-shadow:0 1px 2px rgba(16,31,44,.06);
+  box-shadow:0 1px 2px rgba(12,14,14,.07);
 }
 .answer p{margin:0; font-size:1.08rem;}
 
 /* --- CTA --- */
-.cta{background:var(--steel); color:var(--bone); padding:36px 0; margin:48px 0 0;}
+.cta{background:var(--steel); color:var(--white); padding:36px 0; margin:48px 0 0;
+     border-top:3px solid var(--tiffany);}
+.cta a{color:var(--tiffany-bright);}
 .btn{
-  display:inline-block; background:var(--signal); color:var(--white);
-  padding:13px 24px; border-radius:5px; text-decoration:none; font-weight:600;
+  display:inline-block; background:var(--signal); color:var(--black);
+  padding:13px 24px; border-radius:5px; text-decoration:none; font-weight:700;
 }
-.btn:hover{background:var(--signal-hi); color:var(--white);}
-.btn-ghost{background:transparent; border:2px solid var(--bone); color:var(--bone);}
+/* Gold is a surface, never text — black on gold is the only accessible pairing. */
+.btn:hover{background:var(--signal-hi); color:var(--black);}
+.btn-ghost{background:transparent; border:2px solid var(--tiffany); color:var(--tiffany-bright);}
+.btn-ghost:hover{background:var(--tiffany); color:var(--black); border-color:var(--tiffany);}
 
 /* --- trust strip --- */
 .trust{display:flex; flex-wrap:wrap; gap:1.5rem; padding:16px 0; font-size:.92rem; color:var(--muted);}
@@ -73,7 +103,8 @@ a:hover{color:var(--signal);}
 .faq .a{margin-top:.6rem; color:var(--ink);}
 
 /* --- wiring nav (M3) --- */
-.wiring{background:var(--white); border:1px solid var(--line); border-radius:6px; padding:20px 24px; margin:36px 0;}
+.wiring{background:var(--white); border:1px solid var(--line); border-top:3px solid var(--tiffany);
+        border-radius:6px; padding:20px 24px; margin:36px 0;}
 .wiring h2{margin-top:0; font-size:1rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted);}
 .wiring ul{list-style:none; padding:0; margin:0 0 1rem; display:flex; flex-wrap:wrap; gap:.5rem .9rem;}
 .wiring li{font-size:.94rem;}
@@ -85,33 +116,49 @@ a:hover{color:var(--signal);}
 .notice{font-size:.88rem; color:var(--muted); font-style:italic; margin-top:1rem;}
 
 /* --- team block (G1) --- */
-.team{background:var(--white); border:1px solid var(--line); border-left:5px solid var(--verify);
+.team{background:var(--tiffany-pale); border:1px solid var(--line); border-left:5px solid var(--verify);
       border-radius:0 6px 6px 0; padding:20px 24px; margin:32px 0;}
 
 /* --- report block (G2) --- */
-.report{background:var(--white); border:1px solid var(--line); border-radius:6px; padding:20px 24px; margin:32px 0;}
+.report{background:var(--white); border:1px solid var(--line); border-top:3px solid var(--signal);
+        border-radius:6px; padding:20px 24px; margin:32px 0;}
 .report ul{margin:.5rem 0 0;}
 
-/* --- draft banner: a page that has not met M1 is never presented as finished --- */
-.draft-banner{background:#fbf1ee; border-left:5px solid #a3341f; padding:14px 20px; margin:20px 0; font-size:.94rem;}
+/* --- prime work zone tag --- */
+.tag-prime{
+  display:inline-block; margin-left:.7rem; vertical-align:middle;
+  background:var(--tiffany); color:var(--black);
+  font-size:.62em; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  padding:.28em .6em; border-radius:3px;
+}
+.area-only{font-size:.94rem; color:var(--muted); border-left:3px solid var(--line); padding-left:14px;}
+
+/* --- draft banner: a page that has not met M1 is never presented as finished ---
+   Deliberately outside the brand palette. A warning that looks like the brand accent
+   stops reading as a warning. */
+.draft-banner{background:#fbf0ec; border-left:5px solid #9c3520; color:#5d2013;
+              padding:14px 20px; margin:20px 0; font-size:.94rem;}
 
 /* --- sticky click-to-call (mobile) --- */
 .phonebar{
   position:fixed; left:0; right:0; bottom:0; z-index:50;
-  background:var(--signal); color:var(--white); text-align:center; padding:13px;
+  background:var(--signal); color:var(--black); text-align:center; padding:13px;
   font-weight:700; text-decoration:none; display:none;
 }
 @media (max-width:768px){ .phonebar{display:block;} body{padding-bottom:56px;} }
 
 /* --- footer --- */
-.site-footer{background:var(--navy); color:#aebbc6; margin-top:64px; padding:40px 0; font-size:.92rem;}
-.site-footer a{color:var(--bone);}
-.site-footer h3{color:var(--white); font-size:.95rem; text-transform:uppercase; letter-spacing:.08em;}
+.site-footer{background:var(--navy); color:#b3bdbc; margin-top:64px; padding:40px 0; font-size:.92rem;
+             border-top:3px solid var(--tiffany);}
+.site-footer a{color:var(--white);}
+.site-footer a:hover{color:var(--tiffany-bright);}
+.site-footer h3{color:var(--tiffany-bright); font-size:.95rem; text-transform:uppercase; letter-spacing:.08em;}
 .footer-cols{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:28px;}
 .site-footer ul{list-style:none; padding:0; margin:0;}
 .site-footer li{margin-bottom:.4rem;}
 
 table{width:100%; border-collapse:collapse; margin:20px 0; font-size:.95rem;}
-th{background:var(--navy); color:var(--white); text-align:left; padding:10px 12px;}
+th{background:var(--navy); color:var(--white); text-align:left; padding:10px 12px;
+   border-bottom:3px solid var(--signal);}
 td{padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top;}
 img{max-width:100%; height:auto;}

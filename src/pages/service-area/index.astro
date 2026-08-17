@@ -4,41 +4,53 @@ import AnswerBox from '../../components/AnswerBox.astro';
 import Faq from '../../components/Faq.astro';
 import Cta from '../../components/Cta.astro';
 import MdBody from '../../components/MdBody.astro';
-import { cities } from '../../data/cities';
+import { cities, areaOnlyCities, PRIME_COUNTIES } from '../../data/cities';
 import { resolve } from '../../lib/body';
 
 const route = '/service-area/';
+/** County order follows cities.ts array order, so the prime northern counties lead. */
 const counties = [...new Set(cities.filter(c => c.cluster !== 'area').map(c => c.county))];
-const answer = 'Guardian K9 Company serves all of Washington State as a service-area business, with the deepest coverage across the Puget Sound corridor from Everett through Seattle, Bellevue and Tacoma to Olympia, plus Spokane in eastern Washington and Vancouver in Clark County. Travel outside those markets is scheduled rather than same-day.';
+const isPrime = (county: string) => (PRIME_COUNTIES as readonly string[]).includes(county);
+
+const answer = 'Guardian K9 Company is a Northern Washington canine detection business. Whatcom and Skagit counties are the prime work zones, covered on a regular schedule. We serve the rest of Washington State too, including the Puget Sound corridor, Spokane and Clark County, but that work is booked in advance rather than same-day.';
 const faqs = [
   { q: 'Do you have an office we can visit?', a: 'No. Guardian is a service-area business — we work at your property, so we publish no street address. Everything is arranged by phone, email or the request form.' },
-  { q: 'Will you travel outside the listed cities?', a: 'Yes, anywhere in Washington. Work outside the core markets is scheduled in advance rather than same-day, and travel is a factor in scoping.' },
-  { q: 'Do you cover eastern Washington?', a: 'Yes. Spokane is a core market, and the pest season there is genuinely different from the maritime west side — we do not reuse west-side assumptions on the east side.' },
-  { q: 'Can you cover a portfolio across several cities?', a: 'Yes. Multi-site programs run on one schedule with consistent documentation across every property.' },
-  { q: 'How quickly can you reach a property?', a: 'Within the Puget Sound corridor, quickly. Outside it, scheduling is arranged around travel — we would rather commit to a real date than a hopeful one.' },
-  { q: 'Which market is your base?', a: 'The Puget Sound corridor carries the bulk of the work, which is where the schedule is densest.' },
+  { q: 'Which areas are your prime work zones?', a: 'Whatcom and Skagit counties. Those two carry the bulk of the schedule, and every incorporated city and town in Skagit County is inside the service area.' },
+  { q: 'Will you travel outside the northern counties?', a: 'Yes, anywhere in Washington. Lindsey will travel when the job warrants it. Work south of Everett or east of the Cascades is booked in advance rather than same-day, and travel is a factor in scoping.' },
+  { q: 'Why are some small towns listed without their own page?', a: 'Because a page we cannot fill with real local research is worse than no page. Towns like Hamilton and Lyman are genuinely covered; they are listed here rather than given a thin page written to look thorough.' },
+  { q: 'Can you cover a portfolio across several cities?', a: 'Yes. Multi-site programs run on one schedule with consistent documentation across every property, which is easier to deliver inside the northern counties than across the state.' },
+  { q: 'How quickly can you reach a property?', a: 'Inside Whatcom and Skagit, quickly. Elsewhere, scheduling is arranged around travel — we would rather commit to a real date than a hopeful one.' },
+  { q: 'Do you cover the San Juan Islands and Whidbey?', a: 'Anacortes is a named service area and Oak Harbor sits on the northern corridor across Deception Pass. Island work depends on ferry timetables, so it is always scheduled rather than promised same-day.' },
 ];
 const r = await resolve(route, { answer, faqs });
 ---
 <BaseLayout
-  title="Where We Work: K9 Detection Across Washington"
-  description="Guardian K9 Company serves all of Washington State, with the deepest coverage across the Puget Sound corridor, Spokane and Clark County. Service-area business, no walk-in address."
+  title="Where We Work: Northern Washington K9 Detection"
+  description="Guardian K9 Company works across Washington State from a Northern Washington base, with Whatcom and Skagit counties as the prime work zones."
   path={route}
   breadcrumbs={[{name:'Home',path:'/'},{name:'Service area',path:'/service-area/'}]}
   faqs={r.faqs} draft={r.draft} dateModified={r.dateModified}
-  pageType={{ kind: 'service', serviceType: 'Canine detection services', areaServed: ['Washington'] }}
+  pageType={{ kind: 'service', serviceType: 'Canine detection services', areaServed: ['Whatcom County','Skagit County','Washington'] }}
 >
   <div class="wrap">
     <h1>Where we work</h1>
     <AnswerBox answer={r.answer} />
     {counties.map(county => (
       <section>
-        <h2>{county} County</h2>
+        <h2>{county} County{isPrime(county) && <span class="tag-prime">Prime work zone</span>}</h2>
         <ul>
           {cities.filter(c => c.county === county && c.cluster !== 'area').map(c => (
             <li><a href={`/service-area/${c.slug}/`}>{c.name}</a> — {c.housingProfile}</li>
           ))}
         </ul>
+        {areaOnlyCities.filter(c => c.county === county).length > 0 && (
+          <p class="area-only">
+            Also covered in {county} County on the same terms:{' '}
+            {areaOnlyCities.filter(c => c.county === county).map(c => c.name).join(', ')}.
+            These are small enough that we would rather name them here than publish a page
+            we cannot fill with real local research.
+          </p>
+        )}
       </section>
     ))}
     <MdBody entry={r.body} />
