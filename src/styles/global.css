@@ -1,164 +1,387 @@
-/* Guardian K9 — design tokens. Build plan 1.6.
+/* Guardian K9 — design tokens and surface styling. Build plan 1.6.
    Rebrand is a token swap, never a component rewrite (Keystone individuality guardrail).
+   Nothing below requires a change to any .astro file; only `--muted` is referenced
+   from inside a component, and it is still defined.
 
-   PALETTE (client direction, 2026-08-17): Tiffany blue, black, gold.
-   Only `--muted` is referenced from inside .astro components; every other token is
-   consumed here, so the palette can be re-cut again without touching a component.
+   PALETTE (client direction, 2026-08-17, revised):
+     Tiffany blue  PRIMARY    — header, hero, section accents, surfaces
+     Black         SECONDARY  — footer, headings, deep anchors
+     Gold          ACCENT     — calls to action, and nothing else
 
-   Contrast discipline — the brand colours are not interchangeable with their text roles:
-     · --tiffany (#0abab5) is a SURFACE and ACCENT colour. It fails contrast as body text
-       on white, so text and links use --tiffany-deep instead.
+   Gold is reserved for CTAs. Using it decoratively destroys its meaning; if everything
+   is highlighted, the button stops reading as the button.
+
+   CONTRAST DISCIPLINE — the brand colours are not interchangeable with their text roles:
+     · --tiffany (#0abab5) is a SURFACE colour. As text on white it fails WCAG AA, so
+       text and links use --tiffany-deep. White text needs --tiffany-shade or darker.
      · --gold is a SURFACE colour. Gold text on white fails; gold surfaces take black text.
-     · Anything sitting on black uses the bright variants. */
+     · On black, use the bright variants. */
 
 :root{
   /* ---- brand palette -------------------------------------------------- */
-  --tiffany:#0abab5;        /* brand accent, surfaces, rules */
-  --tiffany-bright:#4fdcd7; /* on black only */
-  --tiffany-deep:#0a7a76;   /* text and links on light backgrounds */
-  --tiffany-pale:#e4f8f7;   /* tints and panel fills */
-  --gold:#c9a227;           /* CTA surfaces */
-  --gold-bright:#e2bb3d;    /* CTA hover */
-  --gold-deep:#7d6412;      /* gold-family text on light backgrounds */
-  --black:#0c0e0e;
-  --black-soft:#191d1d;
-  --off-white:#f7f6f3;
+  --tiffany:#0abab5;
+  --tiffany-lift:#2ecfca;   /* hover on tiffany surfaces */
+  --tiffany-bright:#5fe3de; /* on black / deep tiffany only */
+  --tiffany-shade:#0a7a76;  /* dark enough to carry white text */
+  --tiffany-deep:#08615e;   /* text and links on light backgrounds */
+  --tiffany-ink:#04302e;    /* deepest, for gradient ends */
+  --tiffany-pale:#e6faf9;   /* panel fills */
+  --tiffany-mist:#f3fbfa;   /* page tint */
+
+  --gold:#c9a227;
+  --gold-bright:#e8c243;
+  --gold-deep:#7d6412;
+
+  --black:#0b0d0d;
+  --black-soft:#171b1b;
+  --off-white:#f7f9f8;
 
   /* ---- semantic tokens (the component API — names deliberately stable) -- */
-  --navy:var(--black);       /* primary dark surface: header, hero, footer */
-  --steel:var(--black-soft); /* secondary dark surface */
-  --signal:var(--gold);      /* CTA / accent */
+  --navy:var(--black);
+  --steel:var(--black-soft);
+  --signal:var(--gold);
   --signal-hi:var(--gold-bright);
-  --bone:var(--off-white);   /* page */
-  --verify:var(--tiffany-deep); /* all-clear and confirmed-team states */
-  --ink:#141717;
-  --muted:#5c6666;
-  --line:#dedad3;
+  --bone:var(--tiffany-mist);
+  --verify:var(--tiffany-shade);
+  --ink:#111616;
+  --muted:#55625f;
+  --line:#d8e5e3;
   --white:#fff;
+
+  /* ---- depth, shape, motion ------------------------------------------- */
+  --r-sm:8px;
+  --r-md:14px;
+  --r-lg:20px;
+  --shadow-1:0 1px 2px rgba(4,48,46,.06), 0 2px 8px rgba(4,48,46,.05);
+  --shadow-2:0 2px 6px rgba(4,48,46,.07), 0 10px 28px rgba(4,48,46,.09);
+  --shadow-3:0 4px 12px rgba(4,48,46,.10), 0 22px 55px rgba(4,48,46,.14);
+  --shadow-gold:0 6px 20px rgba(201,162,39,.34);
+  --ease:cubic-bezier(.22,.7,.3,1);
 
   --font-body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-head: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --wrap: 1120px;
+  --wrap: 1160px;
 }
 
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
+
 body{
-  margin:0; background:var(--bone); color:var(--ink);
-  font-family:var(--font-body); font-size:17px; line-height:1.65;
+  margin:0;
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:17.5px;
+  line-height:1.68;
   -webkit-font-smoothing:antialiased;
+  /* Not flat: the page itself carries a soft tiffany wash rather than a single fill. */
+  background:
+    radial-gradient(1200px 600px at 85% -8%, rgba(10,186,181,.13), transparent 60%),
+    radial-gradient(900px 500px at -10% 12%, rgba(10,186,181,.08), transparent 55%),
+    var(--bone);
+  background-attachment:fixed;
 }
-.wrap{max-width:var(--wrap); margin:0 auto; padding:0 20px;}
-h1,h2,h3,h4{font-family:var(--font-head); color:var(--navy); line-height:1.2; letter-spacing:-0.01em;}
-h1{font-size:clamp(2rem,4.5vw,3rem); margin:0 0 .5em;}
-h2{font-size:clamp(1.4rem,2.6vw,1.9rem); margin:2em 0 .5em;}
-h3{font-size:1.2rem; margin:1.6em 0 .4em;}
-a{color:var(--tiffany-deep);}
-a:hover{color:var(--gold-deep);}
-:focus-visible{outline:3px solid var(--tiffany); outline-offset:2px;}
 
-/* --- header / nav --- */
-.site-header{background:var(--navy); color:var(--white); border-bottom:3px solid var(--tiffany);}
-.site-header a{color:var(--white); text-decoration:none;}
+.wrap{max-width:var(--wrap); margin:0 auto; padding:0 22px;}
+
+/* ---- type: bolder, tighter, more confident --------------------------- */
+h1,h2,h3,h4{
+  font-family:var(--font-head);
+  color:var(--navy);
+  line-height:1.12;
+  letter-spacing:-0.025em;
+  font-weight:800;
+}
+h1{font-size:clamp(2.2rem,5.4vw,3.7rem); margin:0 0 .45em;}
+h2{font-size:clamp(1.55rem,3vw,2.25rem); margin:2.1em 0 .55em;}
+h3{font-size:clamp(1.15rem,1.7vw,1.35rem); margin:1.7em 0 .4em; letter-spacing:-0.015em;}
+
+/* Accent rule on body headings. Removed below wherever a component styles its own H2,
+   which is more robust than a :not() chain with descendant combinators in it. */
+main h2{position:relative; padding-top:.5em;}
+main h2::before{
+  content:"";
+  position:absolute; top:0; left:0;
+  width:56px; height:5px; border-radius:3px;
+  background:linear-gradient(90deg, var(--tiffany), var(--tiffany-shade));
+}
+.wiring h2, .citations h2, .cta h2, .hero h2{padding-top:0;}
+.wiring h2::before,
+.citations h2::before,
+.cta h2::before,
+.hero h2::before,
+.hero h1::before{content:none;}
+
+a{
+  color:var(--tiffany-deep);
+  text-decoration-color:rgba(10,186,181,.45);
+  text-underline-offset:3px;
+  transition:color .18s var(--ease), text-decoration-color .18s var(--ease);
+}
+a:hover{color:var(--gold-deep); text-decoration-color:var(--gold);}
+:focus-visible{outline:3px solid var(--tiffany); outline-offset:3px; border-radius:4px;}
+strong{font-weight:700; color:var(--tiffany-ink);}
+
+/* --- header / nav: tiffany is the primary, and it leads ---------------- */
+.site-header{
+  position:sticky; top:0; z-index:60;
+  background:linear-gradient(100deg, var(--tiffany-ink) 0%, var(--tiffany-deep) 42%, var(--tiffany-shade) 100%);
+  color:var(--white);
+  box-shadow:0 2px 18px rgba(4,48,46,.28);
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+.site-header a{color:var(--white); text-decoration:none; font-weight:600;}
 .site-header a:hover{color:var(--tiffany-bright);}
-.site-header nav{display:flex; flex-wrap:wrap; gap:1.1rem; align-items:center; padding:14px 0;}
-.brand{font-weight:700; letter-spacing:.02em; margin-right:auto; display:flex; align-items:center; gap:.6rem;}
-.brand img{height:34px; width:auto;}
+.site-header nav{display:flex; flex-wrap:wrap; gap:1.15rem; align-items:center; padding:15px 0;}
+.brand{
+  font-weight:800; letter-spacing:-0.02em; font-size:1.1rem;
+  margin-right:auto; display:flex; align-items:center; gap:.65rem;
+}
+.brand img{height:38px; width:auto;}
 
-/* --- hero --- */
-.hero{background:var(--navy); color:var(--white); padding:56px 0 64px;}
-.hero h1{color:var(--white); max-width:18ch;}
-.hero .lede{font-size:1.15rem; color:#c8d2d1; max-width:60ch;}
-.hero a{color:var(--tiffany-bright);}
+/* --- hero: the boldest surface on the site ---------------------------- */
+.hero{
+  position:relative; overflow:hidden;
+  background:
+    radial-gradient(760px 420px at 78% 8%, rgba(10,186,181,.55), transparent 62%),
+    linear-gradient(135deg, var(--tiffany-ink) 0%, var(--tiffany-deep) 48%, var(--black) 100%);
+  color:var(--white);
+  padding:84px 0 96px;
+  border-bottom:5px solid var(--gold);
+}
+/* Depth without an image: a soft tiffany bloom behind the text block. */
+.hero::after{
+  content:""; position:absolute; right:-140px; top:-120px;
+  width:560px; height:560px; border-radius:50%;
+  background:radial-gradient(circle, rgba(95,227,222,.30), transparent 68%);
+  pointer-events:none;
+}
+.hero > .wrap{position:relative; z-index:1;}
+.hero h1{
+  color:var(--white); max-width:17ch;
+  font-size:clamp(2.5rem,6.2vw,4.3rem);
+  text-shadow:0 2px 30px rgba(0,0,0,.35);
+}
+.hero .lede{font-size:clamp(1.1rem,1.7vw,1.3rem); color:#cdeeec; max-width:58ch;}
+.hero a:not(.btn){color:var(--tiffany-bright); text-decoration-color:rgba(95,227,222,.5);}
 
-/* --- AEO quick answer (M4 speakable target) --- */
+/* --- AEO quick answer (M4 speakable target): a raised card ------------- */
 .answer{
-  background:var(--white); border-left:5px solid var(--tiffany);
-  padding:20px 24px; margin:28px 0; border-radius:0 6px 6px 0;
-  box-shadow:0 1px 2px rgba(12,14,14,.07);
+  background:linear-gradient(180deg, var(--white), var(--tiffany-pale));
+  border:1px solid var(--line);
+  border-left:6px solid var(--tiffany);
+  padding:26px 30px;
+  margin:34px 0;
+  border-radius:var(--r-md);
+  box-shadow:var(--shadow-2);
 }
-.answer p{margin:0; font-size:1.08rem;}
+.answer p{margin:0; font-size:1.14rem; line-height:1.6; color:var(--tiffany-ink); font-weight:500;}
 
-/* --- CTA --- */
-.cta{background:var(--steel); color:var(--white); padding:36px 0; margin:48px 0 0;
-     border-top:3px solid var(--tiffany);}
-.cta a{color:var(--tiffany-bright);}
+/* --- CTA band --------------------------------------------------------- */
+.cta{
+  background:
+    radial-gradient(620px 320px at 12% 0%, rgba(10,186,181,.30), transparent 64%),
+    linear-gradient(120deg, var(--black) 0%, var(--tiffany-ink) 100%);
+  color:var(--white);
+  padding:52px 0;
+  margin:64px 0 0;
+  border-top:5px solid var(--gold);
+}
+.cta h2{color:var(--white);}
+.cta h2::before{content:none;}
+.cta a:not(.btn){color:var(--tiffany-bright);}
+
+/* Gold is a surface, never text. Black on gold is the only accessible pairing. */
 .btn{
-  display:inline-block; background:var(--signal); color:var(--black);
-  padding:13px 24px; border-radius:5px; text-decoration:none; font-weight:700;
+  display:inline-block;
+  background:linear-gradient(180deg, var(--gold-bright), var(--gold));
+  color:var(--black);
+  padding:15px 30px;
+  border-radius:var(--r-sm);
+  text-decoration:none;
+  font-weight:800;
+  letter-spacing:.01em;
+  box-shadow:var(--shadow-gold);
+  transition:transform .18s var(--ease), box-shadow .18s var(--ease), filter .18s var(--ease);
 }
-/* Gold is a surface, never text — black on gold is the only accessible pairing. */
-.btn:hover{background:var(--signal-hi); color:var(--black);}
-.btn-ghost{background:transparent; border:2px solid var(--tiffany); color:var(--tiffany-bright);}
-.btn-ghost:hover{background:var(--tiffany); color:var(--black); border-color:var(--tiffany);}
+.btn:hover{
+  color:var(--black);
+  transform:translateY(-2px);
+  filter:brightness(1.05);
+  box-shadow:0 10px 28px rgba(201,162,39,.45);
+}
+.btn:active{transform:translateY(0);}
+.btn-ghost{
+  background:transparent; border:2px solid var(--tiffany-bright);
+  color:var(--tiffany-bright); box-shadow:none;
+}
+.btn-ghost:hover{background:var(--tiffany); border-color:var(--tiffany); color:var(--black);}
 
-/* --- trust strip --- */
-.trust{display:flex; flex-wrap:wrap; gap:1.5rem; padding:16px 0; font-size:.92rem; color:var(--muted);}
-.trust span{display:inline-flex; align-items:center; gap:.4rem;}
+/* --- trust strip ------------------------------------------------------ */
+.trust{
+  display:flex; flex-wrap:wrap; gap:.7rem 1rem;
+  padding:20px 0; font-size:.93rem; color:var(--tiffany-deep);
+}
+.trust span{
+  display:inline-flex; align-items:center; gap:.45rem;
+  background:var(--white); border:1px solid var(--line);
+  padding:.42rem .85rem; border-radius:999px;
+  box-shadow:var(--shadow-1); font-weight:600;
+}
 
-/* --- FAQ --- */
-.faq{margin:36px 0;}
-.faq details{border-bottom:1px solid var(--line); padding:14px 0;}
-.faq summary{cursor:pointer; font-weight:600; color:var(--navy);}
-.faq .a{margin-top:.6rem; color:var(--ink);}
+/* --- FAQ: accordion cards --------------------------------------------- */
+.faq{margin:44px 0;}
+.faq details{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:16px 22px;
+  margin-bottom:12px;
+  box-shadow:var(--shadow-1);
+  transition:box-shadow .2s var(--ease), border-color .2s var(--ease);
+}
+.faq details[open]{box-shadow:var(--shadow-2); border-color:rgba(10,186,181,.55);}
+.faq summary{cursor:pointer; font-weight:700; color:var(--tiffany-ink); font-size:1.04rem;}
+.faq summary::marker{color:var(--tiffany);}
+.faq .a{margin-top:.7rem; color:var(--ink);}
 
-/* --- wiring nav (M3) --- */
-.wiring{background:var(--white); border:1px solid var(--line); border-top:3px solid var(--tiffany);
-        border-radius:6px; padding:20px 24px; margin:36px 0;}
-.wiring h2{margin-top:0; font-size:1rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted);}
-.wiring ul{list-style:none; padding:0; margin:0 0 1rem; display:flex; flex-wrap:wrap; gap:.5rem .9rem;}
-.wiring li{font-size:.94rem;}
+/* --- wiring nav (M3) -------------------------------------------------- */
+.wiring{
+  background:linear-gradient(180deg, var(--white), var(--tiffany-mist));
+  border:1px solid var(--line);
+  border-top:4px solid var(--tiffany);
+  border-radius:var(--r-md);
+  padding:24px 28px; margin:44px 0;
+  box-shadow:var(--shadow-1);
+}
+.wiring h2{
+  margin-top:0; font-size:.82rem; text-transform:uppercase;
+  letter-spacing:.12em; color:var(--tiffany-deep); font-weight:800;
+}
+.wiring ul{list-style:none; padding:0; margin:0 0 1rem; display:flex; flex-wrap:wrap; gap:.5rem .6rem;}
+.wiring li{font-size:.93rem;}
+.wiring li a{
+  display:inline-block; background:var(--white); border:1px solid var(--line);
+  padding:.34rem .8rem; border-radius:999px; text-decoration:none; font-weight:600;
+  transition:border-color .18s var(--ease), transform .18s var(--ease), box-shadow .18s var(--ease);
+}
+.wiring li a:hover{border-color:var(--tiffany); transform:translateY(-1px); box-shadow:var(--shadow-1);}
 
-/* --- citations --- */
-.citations{background:var(--white); border:1px solid var(--line); border-radius:6px; padding:20px 24px; margin:32px 0;}
-.citations ol{margin:.5rem 0 0; padding-left:1.2rem;}
-.citations li{margin-bottom:.5rem; font-size:.94rem;}
-.notice{font-size:.88rem; color:var(--muted); font-style:italic; margin-top:1rem;}
+/* --- citations -------------------------------------------------------- */
+.citations{
+  background:var(--white); border:1px solid var(--line);
+  border-radius:var(--r-md); padding:24px 28px; margin:40px 0;
+  box-shadow:var(--shadow-1);
+}
+.citations ol{margin:.6rem 0 0; padding-left:1.25rem;}
+.citations li{margin-bottom:.55rem; font-size:.95rem;}
+.notice{font-size:.9rem; color:var(--muted); font-style:italic; margin-top:1.1rem;}
 
-/* --- team block (G1) --- */
-.team{background:var(--tiffany-pale); border:1px solid var(--line); border-left:5px solid var(--verify);
-      border-radius:0 6px 6px 0; padding:20px 24px; margin:32px 0;}
+/* --- team block (G1) -------------------------------------------------- */
+.team{
+  background:linear-gradient(135deg, var(--tiffany-pale), var(--white));
+  border:1px solid var(--line);
+  border-left:6px solid var(--verify);
+  border-radius:var(--r-md);
+  padding:24px 28px; margin:40px 0;
+  box-shadow:var(--shadow-2);
+}
 
-/* --- report block (G2) --- */
-.report{background:var(--white); border:1px solid var(--line); border-top:3px solid var(--signal);
-        border-radius:6px; padding:20px 24px; margin:32px 0;}
-.report ul{margin:.5rem 0 0;}
+/* --- report block (G2) ------------------------------------------------ */
+.report{
+  background:var(--white); border:1px solid var(--line);
+  border-top:4px solid var(--gold);
+  border-radius:var(--r-md); padding:24px 28px; margin:40px 0;
+  box-shadow:var(--shadow-2);
+}
+.report ul{margin:.6rem 0 0;}
 
-/* --- prime work zone tag --- */
+/* --- prime work zone tag ---------------------------------------------- */
 .tag-prime{
-  display:inline-block; margin-left:.7rem; vertical-align:middle;
-  background:var(--tiffany); color:var(--black);
-  font-size:.62em; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
-  padding:.28em .6em; border-radius:3px;
+  display:inline-block; margin-left:.75rem; vertical-align:middle;
+  background:linear-gradient(135deg, var(--tiffany), var(--tiffany-shade));
+  color:var(--white);
+  font-size:.58em; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+  padding:.36em .75em; border-radius:999px;
+  box-shadow:0 3px 10px rgba(10,186,181,.35);
 }
-.area-only{font-size:.94rem; color:var(--muted); border-left:3px solid var(--line); padding-left:14px;}
+.area-only{
+  font-size:.95rem; color:var(--muted);
+  background:var(--white); border:1px dashed var(--line);
+  border-radius:var(--r-sm); padding:14px 18px;
+}
 
-/* --- draft banner: a page that has not met M1 is never presented as finished ---
-   Deliberately outside the brand palette. A warning that looks like the brand accent
-   stops reading as a warning. */
-.draft-banner{background:#fbf0ec; border-left:5px solid #9c3520; color:#5d2013;
-              padding:14px 20px; margin:20px 0; font-size:.94rem;}
+/* --- body content: lists and prose ------------------------------------ */
+main article ul, main article ol{padding-left:1.35rem;}
+main article li{margin-bottom:.5rem;}
+main article ul{list-style:none; padding-left:0;}
+main article ul li{position:relative; padding-left:1.5rem;}
+main article ul li::before{
+  content:""; position:absolute; left:0; top:.62em;
+  width:8px; height:8px; border-radius:2px;
+  background:linear-gradient(135deg, var(--tiffany), var(--tiffany-shade));
+}
+main article ol li::marker{color:var(--tiffany-deep); font-weight:700;}
+main article p{margin:0 0 1.15em;}
 
-/* --- sticky click-to-call (mobile) --- */
+/* --- draft banner: deliberately outside the brand palette -------------
+   A warning styled in the brand accent stops reading as a warning. */
+.draft-banner{
+  background:#fdf1ec; border:1px solid #f0cfc2; border-left:6px solid #b23c1e;
+  color:#63220f; border-radius:var(--r-sm);
+  padding:16px 22px; margin:24px 0; font-size:.95rem;
+}
+
+/* --- sticky click-to-call (mobile) ------------------------------------ */
 .phonebar{
-  position:fixed; left:0; right:0; bottom:0; z-index:50;
-  background:var(--signal); color:var(--black); text-align:center; padding:13px;
-  font-weight:700; text-decoration:none; display:none;
+  position:fixed; left:0; right:0; bottom:0; z-index:70;
+  background:linear-gradient(180deg, var(--gold-bright), var(--gold));
+  color:var(--black); text-align:center; padding:15px;
+  font-weight:800; text-decoration:none; display:none;
+  box-shadow:0 -6px 22px rgba(4,48,46,.22);
 }
-@media (max-width:768px){ .phonebar{display:block;} body{padding-bottom:56px;} }
+@media (max-width:768px){ .phonebar{display:block;} body{padding-bottom:60px;} }
 
-/* --- footer --- */
-.site-footer{background:var(--navy); color:#b3bdbc; margin-top:64px; padding:40px 0; font-size:.92rem;
-             border-top:3px solid var(--tiffany);}
-.site-footer a{color:var(--white);}
+/* Pages that end without a CTA band must not butt straight into the footer. */
+main > .wrap:last-child{padding-bottom:72px;}
+
+/* --- footer: black is the secondary anchor ---------------------------- */
+.site-footer{
+  background:
+    radial-gradient(700px 340px at 88% 0%, rgba(10,186,181,.16), transparent 62%),
+    var(--black);
+  color:#a9b8b6; margin-top:0; padding:56px 0 44px; font-size:.94rem;
+  border-top:5px solid var(--tiffany);
+}
+.site-footer a{color:#e6f4f3; text-decoration-color:rgba(95,227,222,.4);}
 .site-footer a:hover{color:var(--tiffany-bright);}
-.site-footer h3{color:var(--tiffany-bright); font-size:.95rem; text-transform:uppercase; letter-spacing:.08em;}
-.footer-cols{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:28px;}
+.site-footer h3{
+  color:var(--tiffany-bright); font-size:.82rem; text-transform:uppercase;
+  letter-spacing:.12em; font-weight:800;
+}
+.footer-cols{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:32px;}
 .site-footer ul{list-style:none; padding:0; margin:0;}
-.site-footer li{margin-bottom:.4rem;}
+.site-footer li{margin-bottom:.45rem;}
 
-table{width:100%; border-collapse:collapse; margin:20px 0; font-size:.95rem;}
-th{background:var(--navy); color:var(--white); text-align:left; padding:10px 12px;
-   border-bottom:3px solid var(--signal);}
-td{padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top;}
+/* --- tables ----------------------------------------------------------- */
+table{
+  width:100%; border-collapse:separate; border-spacing:0;
+  margin:26px 0; font-size:.96rem;
+  background:var(--white); border:1px solid var(--line);
+  border-radius:var(--r-md); overflow:hidden; box-shadow:var(--shadow-1);
+}
+th{
+  background:linear-gradient(120deg, var(--tiffany-ink), var(--tiffany-shade));
+  color:var(--white); text-align:left; padding:14px 16px;
+  font-weight:700; letter-spacing:.01em;
+}
+td{padding:13px 16px; border-bottom:1px solid var(--line); vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+tbody tr:nth-child(even) td{background:var(--tiffany-mist);}
+
 img{max-width:100%; height:auto;}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *{transition:none !important; animation:none !important;}
+  .btn:hover, .wiring li a:hover{transform:none;}
+}
