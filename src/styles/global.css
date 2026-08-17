@@ -64,7 +64,8 @@
 }
 
 *{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+/* scroll-padding keeps in-page anchors clear of the sticky header. */
+html{scroll-behavior:smooth; scroll-padding-top:92px;}
 
 body{
   margin:0;
@@ -350,6 +351,8 @@ main article p{margin:0 0 1.15em;}
 }
 @media (max-width:768px){ .phonebar{display:block;} body{padding-bottom:60px;} }
 
+/* Pages that lead with content rather than the hero need room under the header. */
+main > .wrap:first-child{padding-top:44px;}
 /* Pages that end without a CTA band must not butt straight into the footer. */
 main > .wrap:last-child{padding-bottom:72px;}
 
