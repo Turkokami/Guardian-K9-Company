@@ -1,0 +1,15 @@
+---
+import { business } from '../data/business';
+export interface Props { heading: string; body?: string }
+const { heading, body } = Astro.props;
+---
+<section class="cta">
+  <div class="wrap">
+    <h2 style="color:#fff;margin-top:0;">{heading}</h2>
+    {body && <p>{body}</p>}
+    <p>
+      <a class="btn" href="/contact/">Request an inspection</a>
+      {business.phone && <a class="btn btn-ghost" href={`tel:${business.phoneE164}`} style="margin-left:10px;">Call {business.phone}</a>}
+    </p>
+  </div>
+</section>

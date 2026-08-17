@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import WiringNav from '../../components/WiringNav.astro';
+import Faq from '../../components/Faq.astro';
+import Cta from '../../components/Cta.astro';
+import MdBody from '../../components/MdBody.astro';
+import { species, speciesBySlug } from '../../data/species';
+import { wireSpecies } from '../../lib/links';
+import { resolve } from '../../lib/body';
+
+export function getStaticPaths() {
+  return species.map(sp => ({ params: { species: sp.slug }, props: { sp } }));
+}
+const { sp } = Astro.props;
+const route = `/pest-library/${sp.slug}/`;
+
+const answer = `${sp.name} (${sp.scientificName}) — identification, behaviour, and what it means for a Washington property. ${sp.rationale} Guardian is a detection-only company, so this profile is written to help you identify the problem correctly, not to sell you a treatment for it.`;
+
+const confusions = sp.misidentifiedAs.map(s => speciesBySlug(s)).filter(Boolean);
+
+const faqs = [
+  { q: `How do I know it is actually a ${sp.name.toLowerCase()}?`, a: `Identification matters more than most people expect, because ${sp.name} is routinely confused with other species and the wrong identification leads to the wrong response entirely.` },
+  { q: 'Can a detection dog find this species?', a: sp.family === 'bedbug' ? 'Our dog is trained and certified on bed bug odour. A detection sweep locates that odour; the handler then visually confirms what is actually there before anything is recorded.' : 'Goose work is deterrent rather than detection — a handler-directed dog moves birds off a property, it does not search for them.' },
+  { q: 'Do you treat this species?', a: 'No. Guardian applies no pesticides and sells no treatment of any kind. We identify and document; a licensed applicator of your choosing handles treatment.' },
+  { q: 'Is it a health risk?', a: 'The honest answer varies by species and by situation, and this profile sets out what is actually established rather than what makes for a more urgent sales pitch.' },
+  { q: 'When is it most active in Washington?', a: 'Seasonality differs sharply between the maritime west side and the continental east side of the state, and this profile treats them separately rather than averaging them.' },
+  { q: 'What should I do first?', a: 'Confirm what you actually have before spending money on a response. A misidentification is the most expensive first step available.' },
+];
+
+const r = await resolve(route, { answer, faqs });
+const wiring = wireSpecies(sp.slug);
+---
+<BaseLayout
+  title={`${sp.name} (${sp.scientificName}) | Guardian K9 Library`}
+  description={`${sp.name} identification and behaviour for Washington properties, including the species it is most often confused with and what that confusion costs.`}
+  path={route}
+  breadcrumbs={[{name:'Home',path:'/'},{name:'Species library',path:'/pest-library/'},{name:sp.name,path:route}]}
+  faqs={r.faqs}
+  draft={r.draft}
+  dateModified={r.dateModified}
+  pageType={{ kind: 'article' }}
+>
+  <div class="wrap">
+    <h1>{sp.name} <em style="color:var(--muted);font-weight:400;">({sp.scientificName})</em></h1>
+    <AnswerBox answer={r.answer} />
+
+    <h2>Why this profile exists</h2>
+    <p>{sp.rationale}</p>
+
+    {confusions.length > 0 && (
+      <>
+        <h2>Most often confused with</h2>
+        <ul>
+          {confusions.map(x => (
+            <li><a href={`/pest-library/${x!.slug}/`}>{x!.name}</a> ({x!.scientificName})</li>
+          ))}
+        </ul>
+      </>
+    )}
+
+    <p>
+      <a href={sp.wikidata} rel="nofollow noopener" target="_blank">Taxonomic record</a>
+    </p>
+
+    <MdBody entry={r.body} />
+    <WiringNav wiring={wiring} />
+    <Faq faqs={r.faqs} />
+  </div>
+  <Cta heading="Not sure what you're looking at?" body="Correct identification first. It is the cheapest step and the one most often skipped." />
+</BaseLayout>

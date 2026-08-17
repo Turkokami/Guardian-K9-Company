@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import Faq from '../../components/Faq.astro';
+import Cta from '../../components/Cta.astro';
+import MdBody from '../../components/MdBody.astro';
+import { business } from '../../data/business';
+import { resolve } from '../../lib/body';
+const route = '/our-dogs/';
+const dogs = business.dogs;
+const answer = 'The published research on canine bed bug detection shows accuracy varying from 10 to 100 percent between teams working real environments. If the team is the variable, you should be able to see which team you are hiring. So we publish our dogs by name, with their certifying body, certification dates and training cadence.';
+const faqs = [
+  { q: 'Why publish the dog’s details at all?', a: 'Because the evidence says the specific team is what determines the result. A company that argues team quality matters and then never identifies its teams is making an argument it will not stand behind.' },
+  { q: 'How often is a detection dog recertified?', a: 'Certification is time-limited and requires retesting. We publish the issue and expiry dates so you can see exactly where in that cycle the team currently sits.' },
+  { q: 'What is a double-blind test?', a: 'Neither the team nor the proctor nor anyone present knows how many targets are placed or where. Hide counts are randomised, at least one search area is left blank, and an alert more than three feet from the target is scored as false.' },
+  { q: 'What happens between certifications?', a: 'Maintenance training. A certification date with no ongoing blind-trial practice behind it tells you very little about how a team performs today.' },
+  { q: 'Is the dog a pet as well?', a: 'A working detection dog lives a working dog’s life — structured training, conditioning and rest. It is a job, and the dog is very good at it.' },
+  { q: 'Can we meet the dog before booking?', a: 'For program work with commercial clients, yes. It is a reasonable thing to ask and we would rather you did.' },
+];
+const r = await resolve(route, { answer, faqs });
+---
+<BaseLayout
+  title="Meet the Detection Dogs | Guardian K9 Company"
+  description="Our detection dogs by name, with certifying body, certification dates and training cadence — because published research says the specific team is what determines the result."
+  path={route}
+  breadcrumbs={[{name:'Home',path:'/'},{name:'Our dogs',path:route}]}
+  faqs={r.faqs} draft={r.draft} dateModified="2026-08-17"
+  pageType={{ kind: 'article' }}
+>
+  <div class="wrap">
+    <h1>The dogs</h1>
+    <AnswerBox answer={r.answer} />
+    {dogs.length > 0 ? (
+      <ul>
+        {dogs.map(d => (
+          <li>
+            <a href={`/our-dogs/${d.slug}/`}><strong>{d.name}</strong></a> — {d.breed}.
+            Certified on {d.certifiedOn.join(', ')} by {d.certifyingBody},
+            {' '}{d.certificationDate} (valid to {d.certificationExpires}).
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <!-- B-4: G1 cannot be satisfied without real dog data. No stock photo stands in for a named team. -->
+      <p style="color:var(--muted);"><em>
+        Team profiles publish here with names, certifying body and certification dates once
+        certification is issued. We would rather show you an empty page than a stock photo.
+      </em></p>
+    )}
+    <MdBody entry={r.body} />
+    <Faq faqs={r.faqs} />
+  </div>
+  <Cta heading="Book the team" />
+</BaseLayout>

@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AnswerBox from '../components/AnswerBox.astro';
+import TrustStrip from '../components/TrustStrip.astro';
+import TeamBlock from '../components/TeamBlock.astro';
+import Faq from '../components/Faq.astro';
+import Cta from '../components/Cta.astro';
+import MdBody from '../components/MdBody.astro';
+import { services } from '../data/services';
+import { buildableVerticals } from '../data/verticals';
+import { cities } from '../data/cities';
+import { resolve } from '../lib/body';
+
+const route = '/';
+const answer = 'Guardian K9 Company provides independent canine bed bug detection and K9 Canada goose deterrent programs across Washington State. We do not apply pesticides and we do not sell treatment, so our findings have nothing to steer. Every alert is visually confirmed before it appears in your written, dated report.';
+const faqs = [
+  { q: 'Do you treat bed bugs?', a: 'No. Guardian is a detection-only business. We apply no pesticides and sell no treatment, which is precisely why our report has no commercial direction to lean in. If we find something, you engage a licensed applicator of your choosing.' },
+  { q: 'What do I actually receive?', a: 'A dated, signed report mapping every location the dog alerted on, the visual confirmation result for each alert, photographs of confirmed findings, and a written all-clear where nothing was found.' },
+  { q: 'How accurate is canine detection?', a: 'There are two honest numbers and they measure different things. We publish both, with links to the peer-reviewed sources, on our detection accuracy page rather than quoting a single marketing figure.' },
+  { q: 'What areas do you serve?', a: 'All of Washington State, with the deepest coverage across the Puget Sound corridor, Spokane and Clark County. Travel outside the core markets is scheduled rather than same-day.' },
+  { q: 'Do you work with property managers?', a: 'Multifamily property management is our primary commercial program. We run unit-by-unit and building-wide sweeps and produce the documentation that resolves responsibility questions.' },
+  { q: 'Is the goose work legal?', a: 'Handler-directed hazing with no contact and no injury is a non-lethal method Washington Department of Fish and Wildlife names as the method of choice for large open areas. We never disturb nests or eggs.' },
+];
+const r = await resolve(route, { answer, faqs });
+---
+<BaseLayout
+  title="Independent K9 Bed Bug Detection | Washington State"
+  description="Independent canine bed bug detection and K9 goose deterrent programs for multifamily and commercial properties across Washington. We detect; we never sell treatment."
+  path={route}
+  faqs={r.faqs}
+  draft={r.draft}
+  dateModified={r.dateModified}
+  pageType={{ kind: 'service', serviceType: 'Canine detection services', areaServed: ['Washington'] }}
+>
+  <section class="hero">
+    <div class="wrap">
+      <h1>An inspection with nothing to sell you</h1>
+      <p class="lede">
+        Canine bed bug detection and K9 goose deterrent programs for multifamily housing and
+        commercial facilities across Washington State. We apply no pesticides and sell no
+        treatment — so what the dog finds is the only thing driving the report.
+      </p>
+      <p><a class="btn" href="/contact/">Request an inspection</a></p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <TrustStrip />
+    <AnswerBox answer={r.answer} />
+
+    <h2>What we do</h2>
+    <ul>{services.map(s => <li><a href={`/services/${s.slug}/`}>{s.name}</a></li>)}</ul>
+
+    <h2>Who we do it for</h2>
+    <ul>{buildableVerticals.map(v => <li><a href={`/commercial/${v.slug}/`}>{v.name}</a> — {v.audience}</li>)}</ul>
+
+    <h2>Where we work</h2>
+    <ul>{cities.filter(c => c.cluster !== 'area').map(c => <li><a href={`/service-area/${c.slug}/`}>{c.name}</a>, {c.county} County</li>)}</ul>
+
+    <TeamBlock />
+
+    <h2>Why independence is the product</h2>
+    <p>
+      When the company that inspects your property is also the company that sells you the
+      treatment, the inspection has a built-in incentive to find work. Guardian cannot sell you a
+      treatment, so there is nothing for our findings to lean toward.
+      <a href="/independent-detection/">Read why that matters →</a>
+    </p>
+
+    <MdBody entry={r.body} />
+    <Faq faqs={r.faqs} />
+  </div>
+  <Cta heading="Book an inspection" body="Tell us the property type and unit count and we'll scope it." />
+</BaseLayout>

@@ -1,0 +1,9 @@
+---
+/** Renders a markdown body from the content collection, if one exists for this route. */
+import { render } from 'astro:content';
+import type { Body } from '../lib/body';
+export interface Props { entry?: Body }
+const { entry } = Astro.props;
+const Content = entry ? (await render(entry)).Content : null;
+---
+{Content && <article><Content /></article>}

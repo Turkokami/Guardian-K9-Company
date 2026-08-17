@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import AnswerBox from '../../../components/AnswerBox.astro';
+import TrustStrip from '../../../components/TrustStrip.astro';
+import TeamBlock from '../../../components/TeamBlock.astro';
+import ReportBlock from '../../../components/ReportBlock.astro';
+import WiringNav from '../../../components/WiringNav.astro';
+import Faq from '../../../components/Faq.astro';
+import Cta from '../../../components/Cta.astro';
+import MdBody from '../../../components/MdBody.astro';
+import { cities } from '../../../data/cities';
+import { services } from '../../../data/services';
+import { wireCityService } from '../../../lib/links';
+import { resolve } from '../../../lib/body';
+
+/**
+ * City × service matrix. Built only where the city's `cluster` and `childServices`
+ * data says the research supports it — the geo layer scales by data, not by code.
+ */
+export function getStaticPaths() {
+  const paths = [];
+  for (const c of cities.filter(x => x.cluster !== 'area')) {
+    for (const fam of c.childServices) {
+      const s = services.find(x => x.family === fam);
+      if (s) paths.push({ params: { city: c.slug, service: s.slug }, props: { c, s } });
+    }
+  }
+  return paths;
+}
+const { c, s } = Astro.props;
+const route = `/service-area/${c.slug}/${s.slug}/`;
+const isGoose = s.family === 'goose';
+
+const answer = `Guardian K9 Company provides ${s.name.toLowerCase()} in ${c.name}, ${c.county} County. A certified handler and detection dog work the property, every alert is visually confirmed before it is recorded, and the result is documented in writing the same visit. We apply no pesticides and sell no treatment.`;
+
+const faqs = [
+  { q: `Do you offer ${s.shortName.toLowerCase()} in ${c.name}?`, a: `Yes. ${c.name} is a named service area on our regular schedule, not a travel exception.` },
+  { q: 'Do you treat as well?', a: 'No. Detection and deterrent work only. That is the structural reason our findings carry no commercial direction.' },
+  { q: `What is specific to ${c.name}?`, a: c.localHooks[0] },
+  { q: 'How is scheduling handled?', a: 'Single-property work is usually quick to place; program and building-wide work is booked in advance so access can be arranged properly.' },
+  { q: 'What documentation comes with it?', a: 'A dated, signed written result. For detection work that means an alert map with confirmation results; for goose programs it means a visit and outcome record.' },
+  { q: 'How is it priced?', a: 'By property size, number of spaces or acreage, travel distance and turnaround requirement.' },
+];
+
+const r = await resolve(route, { answer, faqs });
+const wiring = wireCityService(c.slug, s.slug);
+---
+<BaseLayout
+  title={`${s.shortName} in ${c.name}, WA | Guardian K9`}
+  description={`${s.name} in ${c.name}, ${c.county} County, from an independent detection-only canine team. Every alert visually confirmed and documented in writing.`}
+  path={route}
+  breadcrumbs={[
+    {name:'Home',path:'/'},
+    {name:'Service area',path:'/service-area/'},
+    {name:c.name,path:`/service-area/${c.slug}/`},
+    {name:s.shortName,path:route},
+  ]}
+  faqs={r.faqs}
+  draft={r.draft}
+  dateModified={r.dateModified}
+  pageType={{ kind: 'service', serviceType: s.schemaServiceType, areaServed: [c.name, `${c.county} County`] }}
+>
+  <div class="wrap">
+    <h1>{s.name} in {c.name}, Washington</h1>
+    <TrustStrip />
+    <AnswerBox answer={r.answer} />
+
+    <h2>Why {c.name} specifically</h2>
+    <ul>{c.localHooks.map(h => <li>{h}</li>)}</ul>
+
+    <TeamBlock />
+    <MdBody entry={r.body} />
+    {!isGoose && <ReportBlock />}
+    <WiringNav wiring={wiring} />
+    <Faq faqs={r.faqs} />
+  </div>
+  <Cta heading={`Book ${s.shortName.toLowerCase()} in ${c.name}`} />
+</BaseLayout>

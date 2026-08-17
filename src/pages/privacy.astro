@@ -1,0 +1,16 @@
+---
+/** Utility page — exempt from the M1 word floor by path in the harness. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+const route = '/privacy/';
+---
+<BaseLayout
+  title="Privacy | Guardian K9 Company"
+  description="Privacy information for Guardian K9 Company, an independent canine detection service operating across Washington State. Contact us with any questions about this policy."
+  path={route}
+  breadcrumbs={[{name:'Home',path:'/'},{name:'Privacy',path:route}]}
+>
+  <div class="wrap">
+    <h1>Privacy</h1>
+    <p><em>Pending final copy (B-8 / B-13). This page exists so it is never a dead link.</em></p>
+  </div>
+</BaseLayout>

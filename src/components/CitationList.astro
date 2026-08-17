@@ -1,0 +1,19 @@
+---
+/** Every citation on this site is a WORKING outbound link to the primary source. */
+import { NOT_LEGAL_ADVICE, type Citation } from '../data/compliance';
+export interface Props { citations: Citation[]; reviewedDate: string; legal?: boolean }
+const { citations, reviewedDate, legal = true } = Astro.props;
+---
+<section class="citations">
+  <h2 style="margin-top:0;">Sources</h2>
+  <p style="font-size:.9rem;color:var(--muted);">Reviewed {reviewedDate}.</p>
+  <ol>
+    {citations.map(c => (
+      <li>
+        <a href={c.url} rel="nofollow noopener" target="_blank">{c.label}</a>
+        {c.quote && <div style="font-size:.9rem;color:var(--muted);margin-top:.25rem;">“{c.quote}”</div>}
+      </li>
+    ))}
+  </ol>
+  {legal && <p class="notice">{NOT_LEGAL_ADVICE}</p>}
+</section>

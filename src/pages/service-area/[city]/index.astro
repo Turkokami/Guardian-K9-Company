@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import AnswerBox from '../../../components/AnswerBox.astro';
+import TrustStrip from '../../../components/TrustStrip.astro';
+import TeamBlock from '../../../components/TeamBlock.astro';
+import WiringNav from '../../../components/WiringNav.astro';
+import Faq from '../../../components/Faq.astro';
+import Cta from '../../../components/Cta.astro';
+import MdBody from '../../../components/MdBody.astro';
+import { cities } from '../../../data/cities';
+import { wireCity } from '../../../lib/links';
+import { resolve } from '../../../lib/body';
+
+export function getStaticPaths() {
+  return cities
+    .filter(c => c.cluster !== 'area')
+    .map(c => ({ params: { city: c.slug }, props: { c } }));
+}
+const { c } = Astro.props;
+const route = `/service-area/${c.slug}/`;
+
+const answer = `Guardian K9 Company provides independent canine bed bug detection and goose deterrent programs in ${c.name}, ${c.county} County. We screen, confirm every alert visually, and hand you a dated written report — and because we apply no pesticides and sell no treatment, there is nothing for those findings to lean toward.`;
+
+const faqs = [
+  { q: `Do you actually cover ${c.name}?`, a: `Yes. ${c.name} is one of our named service areas and sits within our regular schedule rather than being a travel exception.` },
+  { q: 'Do you treat, or only detect?', a: 'Only detect. If we confirm a problem you engage a licensed applicator of your choosing; we have no financial stake in which one.' },
+  { q: `What kind of buildings do you work in around ${c.name}?`, a: c.housingProfile },
+  { q: 'How fast can you get out?', a: 'Single-unit work is usually quick to place. Building-wide sweeps are scheduled in advance so the access notices can be issued properly.' },
+  { q: 'What do we receive afterwards?', a: 'A dated, signed report mapping every alert location, the confirmation result for each, photographs where confirmation was possible, and a written all-clear where nothing was found.' },
+  { q: 'What does it cost?', a: 'Unit count, total area, travel and turnaround drive the number. We scope from the property rather than quoting a flat rate.' },
+];
+
+const r = await resolve(route, { answer, faqs });
+const wiring = wireCity(c.slug);
+---
+<BaseLayout
+  title={`K9 Bed Bug Detection in ${c.name}, WA | Guardian K9`}
+  description={`Independent canine bed bug detection and goose deterrent programs in ${c.name}, ${c.county} County. Detection only — every alert confirmed, every result documented.`}
+  path={route}
+  breadcrumbs={[
+    {name:'Home',path:'/'},
+    {name:'Service area',path:'/service-area/'},
+    {name:c.name,path:route},
+  ]}
+  faqs={r.faqs}
+  draft={r.draft}
+  dateModified={r.dateModified}
+  pageType={{ kind: 'service', serviceType: 'Canine detection services', areaServed: [c.name, `${c.county} County`, 'Washington'] }}
+>
+  <div class="wrap">
+    <h1>Canine detection in {c.name}, Washington</h1>
+    <TrustStrip />
+    <AnswerBox answer={r.answer} />
+
+    <h2>What the housing stock in {c.name} means for an inspection</h2>
+    <p>{c.housingProfile}</p>
+    <p><strong>Predominant vintage:</strong> {c.vintage}</p>
+
+    <h2>Local conditions we work around</h2>
+    <ul>{c.localHooks.map(h => <li>{h}</li>)}</ul>
+
+    <h2>Places we work in and around {c.name}</h2>
+    <ul>{c.landmarks.map(l => <li>{l}</li>)}</ul>
+
+    <TeamBlock />
+    <MdBody entry={r.body} />
+    <WiringNav wiring={wiring} />
+    <Faq faqs={r.faqs} />
+  </div>
+  <Cta heading={`Book an inspection in ${c.name}`} body={`Serving ${c.county} County and the surrounding area.`} />
+</BaseLayout>

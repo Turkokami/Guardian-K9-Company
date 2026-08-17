@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AnswerBox from '../components/AnswerBox.astro';
+import TeamBlock from '../components/TeamBlock.astro';
+import Faq from '../components/Faq.astro';
+import Cta from '../components/Cta.astro';
+import MdBody from '../components/MdBody.astro';
+import { resolve } from '../lib/body';
+const route = '/how-canine-detection-works/';
+const answer = 'A trained detection dog is conditioned to recognise the odour of live bed bugs and viable eggs and to signal when it finds that odour. The handler reads the signal, searches the indicated area visually, and records what is actually confirmed. The dog narrows the search; the handler confirms the finding; the report states both.';
+const faqs = [
+  { q: 'What is the dog actually smelling?', a: 'The odour associated with live bed bugs and viable eggs, rather than shed skins or long-dead insects. That distinction is the reason a dog can indicate an active problem where a visual sweep finds only old evidence.' },
+  { q: 'What does an alert look like?', a: 'A trained final response — a specific, consistent behaviour the dog performs at the source of the odour. Consistency is what makes it readable, which is why maintenance training matters as much as the original certification.' },
+  { q: 'Why confirm visually if the dog alerted?', a: 'Because published field research shows meaningful false-positive rates for canine teams. Visual confirmation is what converts an alert into a finding, and it is why our reports record the two separately.' },
+  { q: 'How long does a room take?', a: 'A typical guest room or bedroom is quick; heavily furnished and cluttered spaces take longer because the dog has more surface to work and more places odour can pool.' },
+  { q: 'Is the dog safe around residents and pets?', a: 'Yes. The dog is a working animal under handler direction throughout, and we coordinate access so residents and pets are not put in an awkward position.' },
+  { q: 'Do you use any chemicals during an inspection?', a: 'None. Detection involves no chemical exposure at all, which is one reason it suits care settings and occupied housing.' },
+  { q: 'What can a dog not tell you?', a: 'How many insects are present, how long they have been there, or that a space is definitively clear. It indicates where odour is; everything else comes from confirmation.' },
+];
+const r = await resolve(route, { answer, faqs });
+---
+<BaseLayout
+  title="How Canine Bed Bug Detection Actually Works"
+  description="What a detection dog is actually smelling, what an alert means, why every alert is visually confirmed, and what canine detection genuinely cannot tell you."
+  path={route}
+  breadcrumbs={[{name:'Home',path:'/'},{name:'How it works',path:route}]}
+  faqs={r.faqs} draft={r.draft} dateModified="2026-08-17"
+  pageType={{ kind: 'article' }}
+>
+  <div class="wrap">
+    <h1>How canine bed bug detection actually works</h1>
+    <AnswerBox answer={r.answer} />
+    <h2>The six steps</h2>
+    <ol>
+      <li><strong>Scope.</strong> We agree what is being searched and what is not, in writing, before the visit.</li>
+      <li><strong>Prepare.</strong> Access, occupancy and environmental conditions are arranged — airflow and clutter both affect a search.</li>
+      <li><strong>Screen.</strong> The dog works the space systematically under handler direction.</li>
+      <li><strong>Confirm.</strong> Every alert is searched visually by the handler before anything is recorded.</li>
+      <li><strong>Record.</strong> Confirmed, not confirmed and inconclusive are logged separately, with photographs where confirmation was possible.</li>
+      <li><strong>Report.</strong> A dated, signed document, the same visit.</li>
+    </ol>
+    <TeamBlock />
+    <p><a href="/detection-accuracy/">What the published research says about accuracy →</a></p>
+    <MdBody entry={r.body} />
+    <Faq faqs={r.faqs} />
+  </div>
+  <Cta heading="Book a screening" />
+</BaseLayout>

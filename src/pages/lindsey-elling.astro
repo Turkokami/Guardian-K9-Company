@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AnswerBox from '../components/AnswerBox.astro';
+import Faq from '../components/Faq.astro';
+import Cta from '../components/Cta.astro';
+import MdBody from '../components/MdBody.astro';
+import { business } from '../data/business';
+import { resolve } from '../lib/body';
+const op = business.operator;
+const route = `/${op.slug}/`;
+const answer = `${op.name} is the owner and working handler of Guardian K9 Company. She brings ${op.yearsAnimalCare}+ years of professional grooming and animal care into canine detection — two decades of reading, handling and conditioning dogs daily, which is unusually direct preparation for handler work. She performs every inspection herself.`;
+const certified = Boolean(op.certifyingBody);
+const lineage = op.mentorConsentOnFile && op.mentorName;
+const faqs = [
+  { q: 'Who actually performs the inspection?', a: `${op.name} does. Guardian is owner-operated, so the person you speak to is the person who works your property and signs the report.` },
+  { q: 'What is the background?', a: `${op.yearsAnimalCare}+ years in professional grooming and animal care. That is daily, hands-on canine behaviour reading and handling — the part of detection work that published research identifies as the variable separating strong teams from weak ones.` },
+  { q: 'What certification is held?', a: certified ? `${op.certificationName}, issued by ${op.certifyingBody} on ${op.certificationDate} and valid to ${op.certificationExpires}.` : 'Certification details are published here with dates as soon as they are issued. We do not claim a certification before it is held, and we do not describe a certifying body’s standards from second-hand sources.' },
+  { q: 'Do you hold a Washington pesticide licence?', a: 'No, and we do not need one for what we do. Guardian applies no pesticides and recommends no pesticide products — both of those are separately licensed activities in Washington, and we stay on our side of that line deliberately.' },
+  { q: 'Do you inspect for termites?', a: 'No. Wood-destroying organism inspections are a distinct licensed activity in Washington and are entirely outside our scope.' },
+  { q: 'Is Guardian part of a larger company?', a: 'No. Guardian K9 Company is independently owned and operated, with no parent company, franchise relationship or treatment affiliate.' },
+];
+const r = await resolve(route, { answer, faqs });
+---
+<BaseLayout
+  title={`${op.name}, Canine Detection Handler | Guardian K9`}
+  description={`${op.name}, owner and working handler of Guardian K9 Company. ${op.yearsAnimalCare}+ years in professional animal care, now running independent canine detection across Washington.`}
+  path={route}
+  breadcrumbs={[{name:'Home',path:'/'},{name:op.name,path:route}]}
+  faqs={r.faqs} draft={r.draft} dateModified="2026-08-17"
+  pageType={{ kind: 'article' }}
+>
+  <div class="wrap">
+    <h1>{op.name}</h1>
+    <p style="color:var(--muted);font-size:1.1rem;">{op.jobTitle}, Guardian K9 Company</p>
+    <AnswerBox answer={r.answer} />
+
+    <h2>Twenty years of reading dogs, before a single inspection</h2>
+    <p>
+      Most people arrive at canine detection from the pest control side and learn the dog second.
+      I came the other way. {op.yearsAnimalCare}+ years in professional grooming and animal care is
+      two decades of daily, hands-on work with dogs of every temperament — reading them, conditioning
+      them, and noticing the small changes in behaviour that most people miss entirely.
+    </p>
+    <p>
+      That matters more than it might sound. The published field research on canine bed bug detection
+      found accuracy ranging from 10 to 100 percent between teams working the same kind of real
+      environments. The variable is not the species. It is the handler's ability to read the dog and
+      the discipline to confirm what the dog indicates.
+      <a href="/detection-accuracy/"> The data behind that claim →</a>
+    </p>
+
+    {certified ? (
+      <>
+        <h2>Credentials</h2>
+        <ul>
+          <li>{op.certificationName} — {op.certifyingBody}, {op.certificationDate} (valid to {op.certificationExpires})</li>
+          <li>{op.yearsAnimalCare}+ years professional grooming and animal care</li>
+        </ul>
+      </>
+    ) : (
+      <!-- B-4: no credential is claimed until it is held and verifiable. -->
+      <p style="color:var(--muted);"><em>Certification details will be published here, with issuing body and dates, as soon as they are issued.</em></p>
+    )}
+
+    {lineage && (
+      <>
+        <h2>Training</h2>
+        <p>
+          Trained under {op.mentorName}, {op.mentorTrainingPeriod}, in {op.mentorTrainingScope}.
+          What transfers from that training is methodology — detect, confirm, verify; every alert
+          searched visually before it is recorded; ethics ahead of product. Credentials and awards
+          held by any instructor are theirs alone and are not claimed here.
+        </p>
+      </>
+    )}
+
+    <MdBody entry={r.body} />
+    <Faq faqs={r.faqs} />
+  </div>
+  <Cta heading="Work with the person who does the work" />
+</BaseLayout>

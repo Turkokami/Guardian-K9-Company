@@ -1,0 +1,118 @@
+---
+/**
+ * /detection-accuracy/ — mandate C2 anchor and the single most important page on this site.
+ *
+ * THE ONLY PAGE PERMITTED TO STATE AN ACCURACY PERCENTAGE.
+ * scripts/compliance-grep.mjs fails the build if a bare accuracy figure appears anywhere else.
+ *
+ * The structure below is fixed by the build plan (4.10) and is not a writer's decision.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AnswerBox from '../components/AnswerBox.astro';
+import Faq from '../components/Faq.astro';
+import Cta from '../components/Cta.astro';
+import MdBody from '../components/MdBody.astro';
+import { business } from '../data/business';
+import { resolve } from '../lib/body';
+
+const route = '/detection-accuracy/';
+const answer = 'There are two honest numbers for canine bed bug detection and they measure different things. In controlled laboratory conditions, trained dogs perform extremely well. In naturally infested apartments, a peer-reviewed field study found a mean detection rate of 44 percent with wide variation between teams. Both are real. Here is which one applies to your building.';
+
+const citations = [
+  { label: 'Pfiester, Koehler & Pereira (2008). Journal of Economic Entomology 101(4):1389 — controlled conditions', url: 'https://pubmed.ncbi.nlm.nih.gov/18767752/' },
+  { label: 'Cooper, Wang & Singh (2014). "Accuracy of Trained Canines for Detecting Bed Bugs." Journal of Economic Entomology 107(6):2171 — field conditions', url: 'https://academic.oup.com/jee/article/107/6/2171/796348' },
+  { label: 'WDDO Bed Bug Canine Detection Test standards', url: 'https://www.wddo.org/bed-bug-canine-detection-test/' },
+];
+
+const faqs = [
+  { q: 'So which number is true?', a: 'Both. The 2008 study measured planted hides in controlled conditions; the 2014 study measured teams working real, naturally infested apartments. They are not in conflict — they are answering different questions, and only one of them resembles your building.' },
+  { q: 'Why does the industry quote 98 percent?', a: 'Because it comes from the controlled study and it is a better marketing number. We do not use it, and we do not use any bare percentage as a claim, because a figure you cannot check against the conditions that produced it is not information.' },
+  { q: 'If field accuracy averages 44 percent, why use a dog at all?', a: 'Because the average conceals the finding that matters: the range ran from 10 to 100 percent. That spread is not a statement about dogs, it is a statement about teams. It means the specific team you hire is the variable — which is why we publish exactly who works your property and when they were last tested.' },
+  { q: 'What do you do about false positives?', a: 'Every alert is visually confirmed by the handler before it enters a report. An unconfirmed alert is recorded as an alert, not as a finding. That is what turns a false-positive risk into a documented, checkable result.' },
+  { q: 'What is a double-blind certification test?', a: 'Under WDDO standards it means neither the team, the proctor, nor anyone present knows how many targets are placed or where. Hide counts are randomised, at least one search area is blank, and an alert more than three feet from the target counts as false.' },
+  { q: 'When is canine detection the wrong tool?', a: 'When you need proof of absence rather than evidence of presence, or when a single room can be inspected visually just as fast. It is a screening tool for covering many spaces quickly, not a guarantee that nothing is there.' },
+  { q: 'Should I trust a company that guarantees detection?', a: 'A guarantee of outcome is not something the published evidence supports. We warrant our process — certification, visual confirmation of every alert, written results — because that is what we actually control.' },
+];
+
+const r = await resolve(route, { answer, faqs });
+const certified = Boolean(business.operator.certifyingBody);
+---
+<BaseLayout
+  title="How Accurate Is Canine Bed Bug Detection? The Data"
+  description="Two peer-reviewed numbers for canine bed bug detection accuracy, both cited and linked: controlled-condition results and the 44 percent field average. Here is what each one means."
+  path={route}
+  breadcrumbs={[{name:'Home',path:'/'},{name:'Detection accuracy',path:route}]}
+  faqs={r.faqs}
+  draft={r.draft}
+  dateModified="2026-08-17"
+  pageType={{ kind: 'article', citations }}
+>
+  <div class="wrap">
+    <h1>How accurate is canine bed bug detection?</h1>
+    <AnswerBox answer={r.answer} />
+
+    <h2>The laboratory number</h2>
+    <p>
+      Pfiester, Koehler and Pereira (2008), published in the <em>Journal of Economic Entomology</em>,
+      tested trained teams against planted hides under controlled conditions and reported very high
+      detection with very low false alerting. This study is where the industry's familiar figure
+      comes from. It is real, it is peer-reviewed, and it describes a laboratory.
+    </p>
+
+    <h2>The field number</h2>
+    <p>
+      Cooper, Wang and Singh (2014), in the same journal, tested teams in naturally infested
+      apartments — real furniture, real clutter, real occupancy. They found a
+      <strong>mean detection rate of 44 percent, ranging from 10 to 100 percent</strong>, and a
+      <strong>mean false-positive rate of 15 percent, ranging from 0 to 57 percent</strong>. Their
+      conclusion was that canine capability under natural conditions may be more limited than under
+      controlled conditions.
+    </p>
+
+    <h2>Why the gap is the actual finding</h2>
+    <p>
+      Most companies pick one number. The more useful observation is that the field range spans
+      almost the entire possible scale. A result that runs from 10 percent to 100 percent across
+      teams is not telling you something about dogs in general — it is telling you that
+      <strong>the team is the variable</strong>. Training maintenance, blind-trial discipline,
+      handler reading, search pattern and environmental control are what move a team from one end
+      of that range to the other.
+    </p>
+
+    <h2>What we do about it, specifically</h2>
+    <ul>
+      <li><strong>Every alert is visually confirmed</strong> before it appears in a report. Confirmed, not confirmed and inconclusive are recorded separately.</li>
+      <li><strong>Certification is published, with dates.</strong> {certified
+        ? `Our team holds ${business.operator.certificationName} certification from ${business.operator.certifyingBody}, dated ${business.operator.certificationDate}.`
+        : 'Certification details are published on the team page as soon as they are issued — we do not claim a certification before it is held.'}</li>
+      <li><strong>Maintenance training is ongoing,</strong> not a one-time event. A certification date without a training cadence behind it tells you very little.</li>
+      <li><strong>We publish the dog and the handler by name.</strong> If the team is the variable, you should know which team you are getting.</li>
+    </ul>
+
+    <h2>What this means for your decision</h2>
+    <p>
+      Canine detection earns its place where you need to screen many spaces quickly, narrow a
+      search before spending on treatment, or verify an all-clear independently. It is not a
+      substitute for visual confirmation and it is not a guarantee of absence. Anyone who tells
+      you otherwise is selling past the evidence.
+    </p>
+
+    <MdBody entry={r.body} />
+
+    <section class="citations">
+      <h2 style="margin-top:0;">Sources</h2>
+      <ol>
+        {citations.map(c => (
+          <li><a href={c.url} rel="nofollow noopener" target="_blank">{c.label}</a></li>
+        ))}
+      </ol>
+      <p class="notice">
+        We link every source rather than citing it in passing, because a citation you cannot check
+        is decoration.
+      </p>
+    </section>
+
+    <Faq faqs={r.faqs} />
+  </div>
+  <Cta heading="Questions about what a sweep can and cannot tell you?" body="Ask. We will give you the version with the caveats in it." />
+</BaseLayout>

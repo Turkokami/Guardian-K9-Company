@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AnswerBox from '../components/AnswerBox.astro';
+import Faq from '../components/Faq.astro';
+import Cta from '../components/Cta.astro';
+import MdBody from '../components/MdBody.astro';
+import { business } from '../data/business';
+import { resolve } from '../lib/body';
+const route = '/our-guarantee/';
+const answer = 'Our guarantee covers our process, not an outcome we do not control. We guarantee a certified handler and dog, that every alert is searched visually before it is recorded, that you receive a dated written result the same visit, and defined re-inspection terms. We do not guarantee that a property is free of bed bugs, because no honest inspection can.';
+const faqs = [
+  { q: 'Why not guarantee that we are bed bug free?', a: 'Because the published field research does not support that promise, and a guarantee that cannot be honoured is worse than none. We guarantee the parts of the work we control and say so plainly.' },
+  { q: 'What does the re-inspection term cover?', a: 'The defined terms are published on this page. They set out the window, the conditions, and what is included — no open-ended language, no "lifetime" anything.' },
+  { q: 'What if the dog misses something?', a: 'The published field data shows canine teams miss things, which is exactly why we publish that data rather than hide it. The re-inspection terms exist because of it, not in spite of it.' },
+  { q: 'Do you guarantee the treatment worked?', a: 'We do not perform treatment, so we cannot guarantee it. What we can do is verify independently afterwards, which is a different and arguably more useful thing.' },
+  { q: 'Is the guarantee in writing?', a: 'Yes. Every use of the word "guaranteed" anywhere on this site links to this page, and the terms are part of the written scope of service.' },
+  { q: 'Are there exclusions?', a: 'Yes, and they are listed rather than buried. Areas we were not given access to are the most common one, which is also why every report states what was not searched.' },
+];
+const r = await resolve(route, { answer, faqs });
+---
+<BaseLayout
+  title="Our Service Guarantee: Defined Terms | Guardian K9"
+  description="A guarantee covering our process, not an outcome we cannot control: certified team, every alert visually confirmed, written result same visit, defined re-inspection terms."
+  path={route}
+  breadcrumbs={[{name:'Home',path:'/'},{name:'Our guarantee',path:route}]}
+  faqs={r.faqs} draft={r.draft} dateModified="2026-08-17"
+  pageType={{ kind: 'article' }}
+>
+  <div class="wrap">
+    <h1>Our guarantee, in defined terms</h1>
+    <AnswerBox answer={r.answer} />
+    <h2>What we guarantee</h2>
+    <ul>
+      <li>A certified handler and detection dog perform the work.</li>
+      <li>Every alert is searched visually before anything is recorded as a finding.</li>
+      <li>A dated, signed written result, the same visit.</li>
+      <li>The report states what was searched and what was not.</li>
+      <li>Defined re-inspection terms, published rather than negotiated after the fact.</li>
+    </ul>
+    <h2>What we do not guarantee</h2>
+    <ul>
+      <li>That a property is free of bed bugs. No inspection method available can honestly promise that.</li>
+      <li>The outcome of a treatment we did not perform and do not sell.</li>
+      <li>Detection in areas we were not given access to.</li>
+    </ul>
+    {!business.guaranteeTermsPublished && (
+      <!-- B-9: ratified terms pending. This is contractual language, not marketing copy. -->
+      <p class="draft-banner"><strong>Terms pending ratification.</strong> The full defined terms publish here once finalised in writing.</p>
+    )}
+    <MdBody entry={r.body} />
+    <Faq faqs={r.faqs} />
+  </div>
+  <Cta heading="Read the terms, then book" />
+</BaseLayout>

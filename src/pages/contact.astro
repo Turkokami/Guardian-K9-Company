@@ -1,0 +1,27 @@
+---
+/** Utility page — exempt from the M1 word floor by path in scripts/word-count.mjs. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { business } from '../data/business';
+const route = '/contact/';
+---
+<BaseLayout
+  title="Request an Inspection | Guardian K9 Company"
+  description="Request an independent canine bed bug detection inspection or a K9 goose deterrent program anywhere in Washington State. Tell us the property and we will scope it."
+  path={route}
+  breadcrumbs={[{name:'Home',path:'/'},{name:'Contact',path:route}]}
+>
+  <div class="wrap">
+    <h1>Request an inspection</h1>
+    <p>
+      Tell us the property type, roughly how many spaces need screening, and where it is. We will
+      come back with what we would actually do and what it would cost.
+    </p>
+    {business.phone && <p><strong>Phone:</strong> <a href={`tel:${business.phoneE164}`}>{business.phone}</a></p>}
+    {business.email && <p><strong>Email:</strong> <a href={`mailto:${business.email}`}>{business.email}</a></p>}
+    <p><strong>Service area:</strong> all of Washington State. We are a service-area business and work at your property, so we publish no walk-in address.</p>
+    <p><strong>Hours:</strong> {business.hours.map(h => `${h.days[0]}${h.days.length > 1 ? `–${h.days[h.days.length-1]}` : ''} ${h.opens}–${h.closes}`).join(' · ')}</p>
+    <!-- B-8: form embed goes here once the CRM endpoint is supplied. A static site cannot email;
+         embed the client's existing form so lead tracking is preserved (Keystone 7A). -->
+    <p style="color:var(--muted);"><em>Booking form embed pending (B-8).</em></p>
+  </div>
+</BaseLayout>

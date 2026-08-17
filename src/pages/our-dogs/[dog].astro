@@ -1,0 +1,55 @@
+---
+/**
+ * Individual handler-and-dog profile — mandate G1.
+ * Generates zero routes until business.dogs is populated (B-4). We would rather ship
+ * no page than a page implying a certification that has not been issued.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import Faq from '../../components/Faq.astro';
+import Cta from '../../components/Cta.astro';
+import MdBody from '../../components/MdBody.astro';
+import { business } from '../../data/business';
+import { resolve } from '../../lib/body';
+
+export function getStaticPaths() {
+  return business.dogs.map(d => ({ params: { dog: d.slug }, props: { d } }));
+}
+const { d } = Astro.props;
+const route = `/our-dogs/${d.slug}/`;
+const answer = `${d.name} is a ${d.breed} certified on ${d.certifiedOn.join(' and ')} by ${d.certifyingBody}, most recently on ${d.certificationDate} and valid to ${d.certificationExpires}. Published field research shows detection accuracy varies enormously between teams, so we publish the team, the certifying body and the dates.`;
+const faqs = [
+  { q: `What is ${d.name} certified to detect?`, a: `${d.certifiedOn.join(', ')}, certified by ${d.certifyingBody}.` },
+  { q: 'When was the last certification?', a: `${d.certificationDate}, valid to ${d.certificationExpires}. We publish both dates so you can see where in the cycle the team currently sits.` },
+  { q: 'What training happens between certifications?', a: d.maintenanceTraining },
+  { q: 'Why does the specific dog matter?', a: 'Because published field research found detection rates ranging from 10 to 100 percent across teams working real environments. The team is the variable, so you should know which one you are getting.' },
+  { q: 'Is every alert treated as a finding?', a: 'No. Every alert is visually confirmed by the handler before it is recorded, and confirmed, unconfirmed and inconclusive results are kept separate in the report.' },
+  { q: `How old is ${d.name}?`, a: `Born ${d.birthYear}. Working detection dogs have a career span, and we are open about where in it the dog currently is.` },
+];
+const r = await resolve(route, { answer, faqs });
+---
+<BaseLayout
+  title={`${d.name}: Certified Detection Dog | Guardian K9`}
+  description={`${d.name}, a ${d.breed} certified on ${d.certifiedOn.join(' and ')} by ${d.certifyingBody}. Certification dates, training cadence and working record published in full.`}
+  path={route}
+  breadcrumbs={[{name:'Home',path:'/'},{name:'Our dogs',path:'/our-dogs/'},{name:d.name,path:route}]}
+  faqs={r.faqs} draft={r.draft} dateModified={r.dateModified}
+  pageType={{ kind: 'profile', about: d.name }}
+>
+  <div class="wrap">
+    <h1>{d.name}</h1>
+    <AnswerBox answer={r.answer} />
+    <table>
+      <tr><th>Breed</th><td>{d.breed}</td></tr>
+      <tr><th>Born</th><td>{d.birthYear}</td></tr>
+      <tr><th>Source</th><td>{d.source}</td></tr>
+      <tr><th>Certified on</th><td>{d.certifiedOn.join(', ')}</td></tr>
+      <tr><th>Certifying body</th><td>{d.certifyingBody}</td></tr>
+      <tr><th>Certified</th><td>{d.certificationDate} (valid to {d.certificationExpires})</td></tr>
+      <tr><th>Maintenance training</th><td>{d.maintenanceTraining}</td></tr>
+    </table>
+    <MdBody entry={r.body} />
+    <Faq faqs={r.faqs} />
+  </div>
+  <Cta heading={`Book ${d.name}`} />
+</BaseLayout>

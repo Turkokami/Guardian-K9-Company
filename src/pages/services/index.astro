@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import Faq from '../../components/Faq.astro';
+import Cta from '../../components/Cta.astro';
+import MdBody from '../../components/MdBody.astro';
+import { services } from '../../data/services';
+import { resolve } from '../../lib/body';
+
+const route = '/services/';
+const answer = 'Guardian K9 Company offers five canine detection services in Washington: bed bug detection inspections, post-treatment verification, move-in and move-out screening, building-wide sweeps, and K9 Canada goose deterrent programs. All are detection or deterrent work only. We apply no pesticides and perform no pest treatment of any kind.';
+const faqs = [
+  { q: 'Which service do I need?', a: 'If you suspect an active problem, start with a detection inspection. If treatment has already happened and you need to confirm it worked, book a verification inspection. If you are turning a unit, book turnover screening.' },
+  { q: 'Do you offer any treatment service?', a: 'No. Detection and deterrent work only. This is a deliberate structural choice, not a capability gap — an inspection sold by a treatment company has an incentive to find work.' },
+  { q: 'Can you inspect for termites or carpenter ants?', a: 'No. Wood-destroying organism inspections are a separately licensed activity in Washington and are outside our scope entirely.' },
+  { q: 'Do you serve residential customers?', a: 'Yes, though our programs are built primarily for multifamily housing and commercial facilities where the number of spaces to screen makes canine detection worthwhile.' },
+  { q: 'How far in advance should we book?', a: 'Building-wide sweeps and program work are scheduled in advance. Single-unit and single-room inspections are typically quicker to place.' },
+  { q: 'What does an inspection cost?', a: 'Cost is driven by unit count, total square footage, travel distance and turnaround requirements. We scope from those inputs rather than quoting a flat figure that would not fit your property.' },
+];
+const r = await resolve(route, { answer, faqs });
+---
+<BaseLayout
+  title="Canine Detection Services in Washington | Guardian K9"
+  description="Five canine detection services across Washington: bed bug detection, post-treatment verification, turnover screening, building-wide sweeps and K9 goose deterrent programs."
+  path={route}
+  breadcrumbs={[{name:'Home',path:'/'},{name:'Services',path:'/services/'}]}
+  faqs={r.faqs} draft={r.draft} dateModified={r.dateModified}
+  pageType={{ kind: 'service', serviceType: 'Canine detection services' }}
+>
+  <div class="wrap">
+    <h1>Canine detection services</h1>
+    <AnswerBox answer={r.answer} />
+    {services.map(s => (
+      <section>
+        <h2><a href={`/services/${s.slug}/`}>{s.name}</a></h2>
+        <p>{s.schemaServiceType}.</p>
+        {s.problems.length > 0 && (
+          <ul>{s.problems.map(p => <li><a href={`/services/${s.slug}/${p.slug}/`}>{p.title}</a></li>)}</ul>
+        )}
+      </section>
+    ))}
+    <MdBody entry={r.body} />
+    <Faq faqs={r.faqs} />
+  </div>
+  <Cta heading="Not sure which service fits?" body="Tell us the property and we'll tell you what we'd actually do." />
+</BaseLayout>

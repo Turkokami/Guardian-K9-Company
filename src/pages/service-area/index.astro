@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import Faq from '../../components/Faq.astro';
+import Cta from '../../components/Cta.astro';
+import MdBody from '../../components/MdBody.astro';
+import { cities } from '../../data/cities';
+import { resolve } from '../../lib/body';
+
+const route = '/service-area/';
+const counties = [...new Set(cities.filter(c => c.cluster !== 'area').map(c => c.county))];
+const answer = 'Guardian K9 Company serves all of Washington State as a service-area business, with the deepest coverage across the Puget Sound corridor from Everett through Seattle, Bellevue and Tacoma to Olympia, plus Spokane in eastern Washington and Vancouver in Clark County. Travel outside those markets is scheduled rather than same-day.';
+const faqs = [
+  { q: 'Do you have an office we can visit?', a: 'No. Guardian is a service-area business — we work at your property, so we publish no street address. Everything is arranged by phone, email or the request form.' },
+  { q: 'Will you travel outside the listed cities?', a: 'Yes, anywhere in Washington. Work outside the core markets is scheduled in advance rather than same-day, and travel is a factor in scoping.' },
+  { q: 'Do you cover eastern Washington?', a: 'Yes. Spokane is a core market, and the pest season there is genuinely different from the maritime west side — we do not reuse west-side assumptions on the east side.' },
+  { q: 'Can you cover a portfolio across several cities?', a: 'Yes. Multi-site programs run on one schedule with consistent documentation across every property.' },
+  { q: 'How quickly can you reach a property?', a: 'Within the Puget Sound corridor, quickly. Outside it, scheduling is arranged around travel — we would rather commit to a real date than a hopeful one.' },
+  { q: 'Which market is your base?', a: 'The Puget Sound corridor carries the bulk of the work, which is where the schedule is densest.' },
+];
+const r = await resolve(route, { answer, faqs });
+---
+<BaseLayout
+  title="Where We Work: K9 Detection Across Washington"
+  description="Guardian K9 Company serves all of Washington State, with the deepest coverage across the Puget Sound corridor, Spokane and Clark County. Service-area business, no walk-in address."
+  path={route}
+  breadcrumbs={[{name:'Home',path:'/'},{name:'Service area',path:'/service-area/'}]}
+  faqs={r.faqs} draft={r.draft} dateModified={r.dateModified}
+  pageType={{ kind: 'service', serviceType: 'Canine detection services', areaServed: ['Washington'] }}
+>
+  <div class="wrap">
+    <h1>Where we work</h1>
+    <AnswerBox answer={r.answer} />
+    {counties.map(county => (
+      <section>
+        <h2>{county} County</h2>
+        <ul>
+          {cities.filter(c => c.county === county && c.cluster !== 'area').map(c => (
+            <li><a href={`/service-area/${c.slug}/`}>{c.name}</a> — {c.housingProfile}</li>
+          ))}
+        </ul>
+      </section>
+    ))}
+    <MdBody entry={r.body} />
+    <Faq faqs={r.faqs} />
+  </div>
+  <Cta heading="Not sure if we reach you?" body="Tell us where the property is and we'll tell you honestly." />
+</BaseLayout>

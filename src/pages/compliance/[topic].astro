@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import CitationList from '../../components/CitationList.astro';
+import WiringNav from '../../components/WiringNav.astro';
+import Faq from '../../components/Faq.astro';
+import Cta from '../../components/Cta.astro';
+import MdBody from '../../components/MdBody.astro';
+import { buildableCompliance } from '../../data/compliance';
+import { wireCompliance } from '../../lib/links';
+import { resolve } from '../../lib/body';
+
+/**
+ * Topics with a `blockedBy` are excluded from the build entirely.
+ * /compliance/pest-licensing-in-washington/ stays out until B-2 (the WSDA written
+ * determination) is in hand — we describe what Guardian does, we do not pronounce on
+ * what the state requires.
+ */
+export function getStaticPaths() {
+  return buildableCompliance.map(t => ({ params: { topic: t.slug }, props: { t } }));
+}
+const { t } = Astro.props;
+const route = `/compliance/${t.slug}/`;
+
+const answer = `${t.h1} — the rule as it actually reads, who it applies to, what it obliges, and what happens when it is not met. Every statute and code section on this page links to its primary source so you can check it yourself. Reviewed ${t.reviewedDate}.`;
+
+const faqs = [
+  { q: 'Is this legal advice?', a: 'No. This is general information about Washington law with links to the primary sources. Statutes and municipal codes change, and your situation may turn on facts this page cannot know. Consult an attorney.' },
+  { q: 'How current is this page?', a: `It was reviewed on ${t.reviewedDate} against the primary sources listed at the bottom. We re-review these pages on a fixed cadence rather than leaving them to drift.` },
+  { q: 'Why does a detection company publish this?', a: 'Because our customers are usually the people who have to comply with it. The documentation we produce is only useful if you know what it needs to prove.' },
+  { q: 'Can you help us meet these obligations?', a: 'We can document what is present and what is not, dated and signed. We cannot treat, and we do not advise on pesticide products — that is a separately licensed activity in Washington.' },
+  { q: 'Where can I read the actual code?', a: 'Every source is linked at the bottom of this page. We link primary sources rather than summarising them, because a summary you cannot check is not much use.' },
+  { q: 'What if my city has stricter rules?', a: 'Many do. Municipal codes can go further than state law, and where we know of a relevant local rule we cover it on its own page.' },
+];
+
+const r = await resolve(route, { answer, faqs });
+const wiring = wireCompliance(t.slug);
+---
+<BaseLayout
+  title={t.title}
+  description={`${t.h1}: the rule as it reads, who it binds, and what it obliges — with every statute linked to its primary source. Reviewed ${t.reviewedDate}.`}
+  path={route}
+  breadcrumbs={[{name:'Home',path:'/'},{name:'Compliance',path:'/commercial/'},{name:t.title,path:route}]}
+  faqs={r.faqs}
+  draft={r.draft}
+  dateModified={t.reviewedDate}
+  pageType={{ kind: 'article', citations: t.citations.map(c => ({ label: c.label, url: c.url })) }}
+>
+  <div class="wrap">
+    <h1>{t.h1}</h1>
+    <AnswerBox answer={r.answer} />
+    <MdBody entry={r.body} />
+    <CitationList citations={t.citations} reviewedDate={t.reviewedDate} />
+    <WiringNav wiring={wiring} />
+    <Faq faqs={r.faqs} />
+  </div>
+  <Cta heading="Need it documented?" body="We produce the dated, third-party record these obligations tend to require." />
+</BaseLayout>

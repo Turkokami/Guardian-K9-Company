@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AnswerBox from '../components/AnswerBox.astro';
+import Faq from '../components/Faq.astro';
+import Cta from '../components/Cta.astro';
+import MdBody from '../components/MdBody.astro';
+import { resolve } from '../lib/body';
+const route = '/independent-detection/';
+const answer = 'When the company that inspects your property is also the company that sells you the treatment, the inspection carries a built-in incentive to find work. Guardian K9 Company applies no pesticides and sells no treatment, so there is nothing for our findings to lean toward. That structural independence is the product, not a marketing angle.';
+const faqs = [
+  { q: 'What does independent actually mean here?', a: 'It means we have no treatment revenue. We cannot sell you a treatment, we take no referral fee or revenue share from any applicator, and we have no financial interest in which company you engage afterwards.' },
+  { q: 'Is this just a way of saying you are small?', a: 'No. It is a deliberate structural choice about what business we are in. Detection and treatment are genuinely different services, and combining them puts an incentive inside the inspection that the buyer then has to discount.' },
+  { q: 'So who does the treatment?', a: 'A licensed applicator of your choosing. We can describe in neutral terms what the industry generally offers, but we do not name, rank or recommend products or companies — recommending a pesticide is a separately licensed activity in Washington.' },
+  { q: 'Can we pair your inspection with our existing pest vendor?', a: 'Yes, and many commercial clients do exactly that. An independent verification layer over an existing treatment relationship is one of the most common ways we are used.' },
+  { q: 'How do we know the report is not shaded?', a: 'Because there is no direction to shade it in. Beyond that: every alert is visually confirmed, confirmed and unconfirmed results are recorded separately, and the report is dated and signed by the handler who did the work.' },
+  { q: 'Do you ever recommend treatment?', a: 'We report what was found and confirmed. Whether and how to treat is your decision with a licensed applicator. We stay on our side of that line deliberately.' },
+];
+const r = await resolve(route, { answer, faqs });
+---
+<BaseLayout
+  title="Why an Independent Inspection Is Different"
+  description="An inspection sold by a treatment company has a built-in incentive to find work. Guardian sells no treatment, so our findings have nothing to steer them. Here is what that means."
+  path={route}
+  breadcrumbs={[{name:'Home',path:'/'},{name:'Independent detection',path:route}]}
+  faqs={r.faqs} draft={r.draft} dateModified="2026-08-17"
+  pageType={{ kind: 'article' }}
+>
+  <div class="wrap">
+    <h1>Why an independent inspection is different</h1>
+    <AnswerBox answer={r.answer} />
+
+    <h2>The conflict most people never think about</h2>
+    <p>
+      Almost every canine bed bug inspection in the country is performed by a company that also
+      sells bed bug treatment. Nobody involved has to be dishonest for that to be a problem. When
+      a finding creates revenue, ambiguity resolves in one direction over time, and the person
+      reading the report has no way to tell which findings were marginal.
+    </p>
+
+    <h2>What we do instead</h2>
+    <ul>
+      <li><strong>No treatment revenue.</strong> We apply no pesticides and sell no treatment of any kind.</li>
+      <li><strong>No referral consideration.</strong> We take no fee, commission or revenue share from any applicator for work that follows an inspection.</li>
+      <li><strong>Vendor-neutral.</strong> Pair our inspection with any treatment provider you like, including one you already use.</li>
+      <li><strong>Every alert visually confirmed</strong> before it is recorded, with confirmed and unconfirmed results kept separate.</li>
+      <li><strong>Dated and signed.</strong> The report says who did the work and when, so it holds up when someone asks.</li>
+    </ul>
+
+    <h2>How to tell an audit from a sales inspection</h2>
+    <p>
+      Ask three questions. Does the inspecting company profit if the answer is yes? Is every alert
+      visually confirmed before it is written down, or is the alert itself the finding? And does the
+      report state what was <em>not</em> searched? An audit answers all three plainly. A sales
+      inspection usually answers none of them.
+    </p>
+
+    <MdBody entry={r.body} />
+    <Faq faqs={r.faqs} />
+  </div>
+  <Cta heading="Want a second opinion on an existing report?" body="Independent verification is one of the most common reasons people call us." />
+</BaseLayout>

@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import AnswerBox from '../../../components/AnswerBox.astro';
+import TrustStrip from '../../../components/TrustStrip.astro';
+import TeamBlock from '../../../components/TeamBlock.astro';
+import ReportBlock from '../../../components/ReportBlock.astro';
+import WiringNav from '../../../components/WiringNav.astro';
+import Faq from '../../../components/Faq.astro';
+import Cta from '../../../components/Cta.astro';
+import MdBody from '../../../components/MdBody.astro';
+import { services } from '../../../data/services';
+import { wireService } from '../../../lib/links';
+import { resolve } from '../../../lib/body';
+
+export function getStaticPaths() {
+  return services.map(s => ({ params: { service: s.slug }, props: { s } }));
+}
+const { s } = Astro.props;
+const route = `/services/${s.slug}/`;
+
+const answer = `Guardian K9 Company provides ${s.name.toLowerCase()} across Washington State. A certified handler and detection dog screen the space systematically, every alert is visually confirmed before it is recorded, and you receive a dated written report the same visit. We apply no pesticides and perform no treatment of any kind.`;
+
+const faqs = [
+  { q: 'Do you treat, or only detect?', a: 'Only detect. Guardian applies no pesticides and sells no treatment. If we confirm a problem you engage a licensed applicator of your choosing — we have no financial interest in which one you pick.' },
+  { q: 'What happens if the dog alerts?', a: 'Every alert is visually confirmed by the handler before it enters the report. Confirmed, not confirmed and inconclusive are recorded separately, because they mean genuinely different things.' },
+  { q: 'How long does an inspection take?', a: 'It depends on the number of spaces and how full they are. Canine screening covers far more ground per hour than visual inspection, which is the entire reason it is used at scale.' },
+  { q: 'What do I receive afterwards?', a: 'A dated, signed report mapping every alert location, the confirmation result for each, photographs of confirmed findings, and a written all-clear where nothing was found.' },
+  { q: 'How is the price determined?', a: 'By unit count, total area, travel distance and turnaround requirement. We scope from the property rather than quoting a flat number that would not fit it.' },
+  { q: 'What areas do you cover?', a: 'All of Washington State, with the deepest coverage across the Puget Sound corridor, Spokane and Clark County. Travel outside the core markets is scheduled rather than same-day.' },
+];
+
+const r = await resolve(route, { answer, faqs });
+const wiring = wireService(s.slug);
+const isGoose = s.family === 'goose';
+---
+<BaseLayout
+  title={s.title}
+  description={`${s.name} across Washington State from an independent, detection-only canine team. Every alert is visually confirmed and documented in a dated written report.`}
+  path={route}
+  breadcrumbs={[{name:'Home',path:'/'},{name:'Services',path:'/services/'},{name:s.name,path:route}]}
+  faqs={r.faqs}
+  draft={r.draft}
+  dateModified={r.dateModified}
+  pageType={{ kind: 'service', serviceType: s.schemaServiceType }}
+>
+  <div class="wrap">
+    <h1>{s.name}</h1>
+    <TrustStrip />
+    <AnswerBox answer={r.answer} />
+    <TeamBlock />
+
+    {isGoose && (
+      <section class="citations">
+        <h2 style="margin-top:0;">How we work, and what we will not do</h2>
+        <p>
+          Handler-directed hazing only — no contact, no injury, and no nests or eggs disturbed.
+          Washington Department of Fish and Wildlife names handler-directed dogs as the method of
+          choice for large open areas such as golf courses, parks and corporate campuses.
+        </p>
+        <p>
+          <strong>We pause hazing during the flightless molt.</strong> Birds that cannot fly cannot
+          leave, and pressuring them at that point is neither defensible nor humane. This is a
+          published operating policy, not a case-by-case judgement.
+        </p>
+        <p>
+          Nest and egg work is governed by the federal Resident Canada Goose Nest and Egg
+          Depredation Order, and registration under it belongs to the landowner, association or
+          local government — never to a vendor.
+          <a href="/compliance/canada-goose-law-washington/"> What the law actually allows →</a>
+        </p>
+      </section>
+    )}
+
+    <MdBody entry={r.body} />
+    {!isGoose && <ReportBlock />}
+    <WiringNav wiring={wiring} />
+    <Faq faqs={r.faqs} />
+  </div>
+  <Cta heading={`Book ${s.shortName.toLowerCase()}`} body="Tell us the property type and size and we'll scope it properly." />
+</BaseLayout>

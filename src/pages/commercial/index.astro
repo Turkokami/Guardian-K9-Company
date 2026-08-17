@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import Faq from '../../components/Faq.astro';
+import Cta from '../../components/Cta.astro';
+import MdBody from '../../components/MdBody.astro';
+import { buildableVerticals } from '../../data/verticals';
+import { resolve } from '../../lib/body';
+
+const route = '/commercial/';
+const answer = 'Guardian K9 Company builds independent canine detection programs for multifamily housing, hotels, cruise and maritime operations, theatres and venues, student housing, senior living, and HOA and golf grounds across Washington. We detect and document; we never sell the treatment that follows.';
+const faqs = [
+  { q: 'Why use an independent detection company?', a: 'Because a report from a company that also sells treatment carries an incentive you then have to discount. Ours does not, which is why it holds up when someone challenges it.' },
+  { q: 'Do you handle both bed bug and goose work?', a: 'Yes, and they usually sell to the same person — whoever is responsible for a large managed property. Facilities directors, HOA boards and campus operations buy both.' },
+  { q: 'Can you support multiple sites?', a: 'Yes. Multi-site programs run on a scheduled cadence with consistent documentation across every property, which is what makes portfolio-level reporting possible.' },
+  { q: 'What is your turnaround on documentation?', a: 'Written results the same visit for detection work; program reporting on whatever cadence your operation needs.' },
+  { q: 'Do you carry insurance and provide COIs?', a: 'Yes, as part of standard vendor onboarding.' },
+  { q: 'What areas do you cover?', a: 'All of Washington State, with the deepest coverage across the Puget Sound corridor, Spokane and Clark County.' },
+];
+const r = await resolve(route, { answer, faqs });
+---
+<BaseLayout
+  title="Commercial K9 Detection Programs | Washington"
+  description="Independent canine detection programs for multifamily, hotels, cruise, venues, student housing, senior living and grounds across Washington State. Documented, detection-only."
+  path={route}
+  breadcrumbs={[{name:'Home',path:'/'},{name:'Commercial',path:'/commercial/'}]}
+  faqs={r.faqs} draft={r.draft} dateModified={r.dateModified}
+  pageType={{ kind: 'service', serviceType: 'Commercial canine detection programs' }}
+>
+  <div class="wrap">
+    <h1>Commercial detection programs</h1>
+    <AnswerBox answer={r.answer} />
+    <h2>One buyer, two problems</h2>
+    <p>
+      Bed bug detection and goose deterrent work look unrelated until you notice they sell to the
+      same person: whoever is responsible for a large managed property. Same relationship, same
+      procurement path, same documentation expectations — two line items.
+    </p>
+    {buildableVerticals.map(v => (
+      <section>
+        <h2><a href={`/commercial/${v.slug}/`}>{v.name}</a></h2>
+        <p><strong>For:</strong> {v.audience}</p>
+        <p>{v.stake}.</p>
+      </section>
+    ))}
+    <MdBody entry={r.body} />
+    <Faq faqs={r.faqs} />
+  </div>
+  <Cta heading="Scope a program" body="Tell us the portfolio and we'll build the cadence around it." />
+</BaseLayout>

@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import Faq from '../../components/Faq.astro';
+import MdBody from '../../components/MdBody.astro';
+import { species } from '../../data/species';
+import { resolve } from '../../lib/body';
+const route = '/pest-library/';
+const answer = 'A deliberately narrow species library: only the species our detection dog actually works, and the ones clients most often mistake for them. We do not publish profiles for species we have nothing to do with, because a padded library is a padded library however long it is.';
+const faqs = [
+  { q: 'Why is this library so short?', a: 'Because it only covers species we actually work or that are routinely mistaken for them. A thirty-entry library of species we have no involvement with would be padding.' },
+  { q: 'Do you treat any of these?', a: 'No. Guardian is detection and deterrent only. These profiles exist to help you identify correctly, not to set up a treatment sale.' },
+  { q: 'Why so much focus on misidentification?', a: 'Because it is the most expensive mistake available. Carpet beetles and spider beetles are mistaken for bed bugs constantly, and bat bugs fool professionals.' },
+  { q: 'Is seasonality the same across Washington?', a: 'No. The maritime west side and continental east side behave differently enough that averaging them produces advice that fits neither.' },
+  { q: 'Can a dog distinguish these species?', a: 'A dog is trained and certified on a specific odour. That is why every alert is visually confirmed before it is recorded.' },
+  { q: 'What if my species is not listed?', a: 'Then it is probably outside our scope, and we would rather say so than write a page implying otherwise.' },
+];
+const r = await resolve(route, { answer, faqs });
+---
+<BaseLayout
+  title="Species Library | Guardian K9 Company"
+  description="Identification profiles for the species our detection dog works, plus the look-alikes they are most often confused with in Washington properties."
+  path={route}
+  breadcrumbs={[{name:'Home',path:'/'},{name:'Species library',path:'/pest-library/'}]}
+  faqs={r.faqs} draft={r.draft} dateModified={r.dateModified}
+  pageType={{ kind: 'article' }}
+>
+  <div class="wrap">
+    <h1>Species library</h1>
+    <AnswerBox answer={r.answer} />
+    <ul>
+      {species.map(sp => (
+        <li><a href={`/pest-library/${sp.slug}/`}>{sp.name}</a> — <em>{sp.scientificName}</em>. {sp.rationale}</li>
+      ))}
+    </ul>
+    <MdBody entry={r.body} />
+    <Faq faqs={r.faqs} />
+  </div>
+</BaseLayout>

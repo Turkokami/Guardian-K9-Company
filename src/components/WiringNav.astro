@@ -1,0 +1,21 @@
+---
+/** M3 — spoke-and-wheel wiring, rendered from derived data. Orphans are impossible. */
+import type { Wiring } from '../lib/links';
+export interface Props { wiring: Wiring }
+const { wiring } = Astro.props;
+const groups = [
+  { label: 'Up', links: wiring.up ? [wiring.up] : [] },
+  { label: 'Explore', links: wiring.down },
+  { label: 'Related', links: wiring.lateral },
+  { label: 'See also', links: wiring.cross },
+].filter(g => g.links.length > 0);
+---
+<nav class="wiring" aria-label="Related pages">
+  {groups.map(g => (
+    <>
+      <h2>{g.label}</h2>
+      <ul>{g.links.map(l => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+    </>
+  ))}
+  <ul><li><a href={wiring.hub.href}>{wiring.hub.label}</a></li></ul>
+</nav>

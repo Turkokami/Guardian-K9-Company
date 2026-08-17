@@ -1,0 +1,44 @@
+---
+import { business } from '../data/business';
+import { services } from '../data/services';
+import { buildableVerticals } from '../data/verticals';
+import { cities } from '../data/cities';
+const year = 2026;
+---
+<footer class="site-footer">
+  <div class="wrap footer-cols">
+    <div>
+      <h3>{business.name}</h3>
+      <p>{business.tagline} — Washington State.</p>
+      <!-- Service-area business: no street address is published anywhere on this site. -->
+      <p>Serving all of Washington State.</p>
+      {business.phone && <p><a href={`tel:${business.phoneE164}`}>{business.phone}</a></p>}
+      {business.email && <p><a href={`mailto:${business.email}`}>{business.email}</a></p>}
+      {business.ubi && <p>WA UBI {business.ubi}</p>}
+    </div>
+    <div>
+      <h3>Services</h3>
+      <ul>{services.map(s => <li><a href={`/services/${s.slug}/`}>{s.name}</a></li>)}</ul>
+    </div>
+    <div>
+      <h3>Commercial</h3>
+      <ul>{buildableVerticals.map(v => <li><a href={`/commercial/${v.slug}/`}>{v.name}</a></li>)}</ul>
+    </div>
+    <div>
+      <h3>Service Area</h3>
+      <ul>{cities.filter(c => c.cluster !== 'area').map(c => <li><a href={`/service-area/${c.slug}/`}>{c.name}</a></li>)}</ul>
+    </div>
+  </div>
+  <div class="wrap" style="margin-top:28px;">
+    <p>
+      <a href="/our-guarantee/">Our guarantee</a> ·
+      <a href="/how-canine-detection-works/">How it works</a> ·
+      <a href="/our-dogs/">The dogs</a> ·
+      <a href="/detection-accuracy/">Detection accuracy</a> ·
+      <a href="/pest-library/">Species library</a> ·
+      <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> ·
+      <a href="/accessibility/">Accessibility</a>
+    </p>
+    <p>© {year} {business.name}. Detection only — we do not apply pesticides or perform treatment.</p>
+  </div>
+</footer>

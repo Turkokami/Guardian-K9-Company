@@ -1,0 +1,11 @@
+---
+import { business } from '../data/business';
+const certified = Boolean(business.operator.certifyingBody);
+---
+<div class="trust">
+  <span>Detection only — we never sell you the treatment</span>
+  <span>Every alert visually confirmed before it enters a report</span>
+  {certified && <span>{business.operator.certifyingBody}-certified handler and dog</span>}
+  <span>Serving all of Washington State</span>
+  {business.insuranceCarrier && <span>Insured</span>}
+</div>

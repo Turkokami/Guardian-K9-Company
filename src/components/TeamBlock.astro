@@ -1,0 +1,47 @@
+---
+/**
+ * G1 — named handler-and-dog attribution. Renders ONLY when the team is real (B-4).
+ * A stock photo does not satisfy G1. If the data is absent the block is absent,
+ * and the acceptance gate flags the page rather than letting it claim a team it lacks.
+ */
+import { business } from '../data/business';
+const op = business.operator;
+const dogs = business.dogs;
+const hasTeam = Boolean(op.certifyingBody) && dogs.length > 0;
+---
+{hasTeam ? (
+  <aside class="team">
+    <h2 style="margin-top:0;">The team on this job</h2>
+    <p>
+      <strong>{op.name}</strong>, {op.jobTitle} — {op.yearsAnimalCare}+ years in professional
+      animal care and handling. {op.certificationName} certified by {op.certifyingBody},
+      {' '}{op.certificationDate} (valid to {op.certificationExpires}).
+      <a href={`/${op.slug}/`}> Full profile</a>.
+    </p>
+    {dogs.map(d => (
+      <p>
+        <strong>{d.name}</strong> — {d.breed}, certified on {d.certifiedOn.join(', ')} by
+        {' '}{d.certifyingBody} on {d.certificationDate} (valid to {d.certificationExpires}).
+        Maintenance training: {d.maintenanceTraining}.
+        <a href={`/our-dogs/${d.slug}/`}> Profile</a>.
+      </p>
+    ))}
+    <p style="font-size:.92rem;color:var(--muted);margin-bottom:0;">
+      Why this matters: <a href="/detection-accuracy/">field accuracy varies enormously between teams</a>,
+      so we publish exactly who is working your property and when they were last tested.
+      <a href="/our-dogs/">All our dogs →</a>
+    </p>
+  </aside>
+) : (
+  <aside class="team" data-pending="G1">
+    <h2 style="margin-top:0;">The team on this job</h2>
+    <p>
+      <strong>{op.name}</strong>, {op.jobTitle} — {op.yearsAnimalCare}+ years in professional
+      animal care and handling. <a href={`/${op.slug}/`}>Full profile</a>.
+    </p>
+    <p style="font-size:.92rem;color:var(--muted);margin-bottom:0;">
+      <a href="/our-dogs/">Meet the detection dogs →</a>
+    </p>
+    <!-- B-4: certification and dog details pending. No certification is claimed until it is held. -->
+  </aside>
+)}

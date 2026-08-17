@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import TrustStrip from '../../components/TrustStrip.astro';
+import TeamBlock from '../../components/TeamBlock.astro';
+import ReportBlock from '../../components/ReportBlock.astro';
+import WiringNav from '../../components/WiringNav.astro';
+import Faq from '../../components/Faq.astro';
+import Cta from '../../components/Cta.astro';
+import MdBody from '../../components/MdBody.astro';
+import { buildableVerticals } from '../../data/verticals';
+import { wireVertical } from '../../lib/links';
+import { resolve } from '../../lib/body';
+
+export function getStaticPaths() {
+  // pendingSignOff verticals are excluded — Keystone Part 14: never build a vertical
+  // for a business type the owner has not confirmed they serve.
+  return buildableVerticals.map(v => ({ params: { vertical: v.slug }, props: { v } }));
+}
+const { v } = Astro.props;
+const route = `/commercial/${v.slug}/`;
+
+const answer = `Guardian K9 Company runs independent canine detection programs for ${v.name.toLowerCase()} across Washington State. We screen, we confirm every alert visually, and we document the result — but we apply no pesticides and sell no treatment, so the findings in your report have nothing to steer them.`;
+
+const faqs = [
+  { q: 'Do you treat, or only detect?', a: 'Only detect. That independence is the point: an inspection sold by a treatment company has a built-in incentive to find work. Ours does not.' },
+  { q: 'What documentation do we receive?', a: 'A dated, signed report mapping every alert location, the visual confirmation result for each, photographs of confirmed findings, and a written all-clear where nothing was found. We retain it so it can be reissued later.' },
+  { q: 'Can you work around our operating hours?', a: 'Yes. Program work in occupied and public-facing facilities is scheduled around operations, including after-hours and overnight windows.' },
+  { q: 'How discreet is the visit?', a: 'As discreet as you need. For public-facing properties we work without marked vehicles or branded clothing, and we coordinate access through whoever you nominate.' },
+  { q: 'Is this a one-off or a program?', a: 'Either. Most facilities of any size move to a scheduled cadence, because a single inspection is a snapshot and a program is a record.' },
+  { q: 'How is pricing structured?', a: 'By the number of spaces to screen, total area, travel distance and turnaround requirement. We scope from your property rather than a flat rate.' },
+  { q: 'Are you insured?', a: 'Yes. Certificates of insurance are provided as part of vendor onboarding.' },
+  { q: 'What standards do you work to?', a: `We build your program around the standards that actually govern your setting — including ${v.authorities[0]}.` },
+];
+
+const r = await resolve(route, { answer, faqs });
+const wiring = wireVertical(v.slug);
+---
+<BaseLayout
+  title={v.title}
+  description={`Independent canine detection programs for ${v.name.toLowerCase()} across Washington. Documented, discreet, and detection-only — we never sell the treatment.`}
+  path={route}
+  breadcrumbs={[{name:'Home',path:'/'},{name:'Commercial',path:'/commercial/'},{name:v.name,path:route}]}
+  faqs={r.faqs}
+  draft={r.draft}
+  dateModified={r.dateModified}
+  pageType={{ kind: 'service', serviceType: `Canine detection program for ${v.name}` }}
+>
+  <div class="wrap">
+    <h1>{v.title.replace(/ \|.*$/, '')}</h1>
+    <p class="lede" style="color:var(--muted);font-size:1.1rem;">{v.stake}.</p>
+    <TrustStrip />
+    <AnswerBox answer={r.answer} />
+
+    <h2>The standards and regulations your program is built around</h2>
+    <p>
+      This section is not decoration. These are the authorities that determine what your
+      documentation has to survive:
+    </p>
+    {v.authorities.map(a => <h3>{a}</h3>)}
+
+    <h2>What makes this setting different</h2>
+    <ul>{v.hooks.map(h => <li>{h}</li>)}</ul>
+
+    <TeamBlock />
+    <MdBody entry={r.body} />
+    <ReportBlock />
+    <WiringNav wiring={wiring} />
+    <Faq faqs={r.faqs} />
+  </div>
+  <Cta heading={`Scope a ${v.name.toLowerCase()} program`} body="Tell us the property count and size and we'll build the cadence around your operations." />
+</BaseLayout>

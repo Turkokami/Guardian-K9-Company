@@ -1,0 +1,16 @@
+---
+/** Utility page — exempt from the M1 word floor by path in the harness. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+const route = '/accessibility/';
+---
+<BaseLayout
+  title="Accessibility | Guardian K9 Company"
+  description="Accessibility information for Guardian K9 Company, an independent canine detection service operating across Washington State. Contact us with any questions about this policy."
+  path={route}
+  breadcrumbs={[{name:'Home',path:'/'},{name:'Accessibility',path:route}]}
+>
+  <div class="wrap">
+    <h1>Accessibility</h1>
+    <p><em>Pending final copy (B-8 / B-13). This page exists so it is never a dead link.</em></p>
+  </div>
+</BaseLayout>

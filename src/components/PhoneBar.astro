@@ -1,0 +1,6 @@
+---
+import { business } from '../data/business';
+---
+{business.phone
+  ? <a class="phonebar" href={`tel:${business.phoneE164}`}>Call {business.phone}</a>
+  : <a class="phonebar" href="/contact/">Request an Inspection</a>}

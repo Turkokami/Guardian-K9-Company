@@ -1,0 +1,9 @@
+---
+/** AEO Quick Answer — 40-60 words, the M4 speakable target. Reused as meta description
+    and as the first FAQ answer. One string, four surfaces. */
+export interface Props { answer: string }
+const { answer } = Astro.props;
+---
+<div class="answer" data-speakable>
+  <p>{answer}</p>
+</div>

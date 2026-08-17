@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import AnswerBox from '../../../components/AnswerBox.astro';
+import WiringNav from '../../../components/WiringNav.astro';
+import Faq from '../../../components/Faq.astro';
+import Cta from '../../../components/Cta.astro';
+import MdBody from '../../../components/MdBody.astro';
+import { services } from '../../../data/services';
+import { wireProblem } from '../../../lib/links';
+import { resolve } from '../../../lib/body';
+
+export function getStaticPaths() {
+  return services.flatMap(s =>
+    s.problems.map(p => ({ params: { service: s.slug, problem: p.slug }, props: { s, p } })),
+  );
+}
+const { s, p } = Astro.props;
+const route = `/services/${s.slug}/${p.slug}/`;
+
+const answer = `This page covers what to do when ${p.title.toLowerCase().replace(/[?:].*$/, '')} — what is usually happening, what to check first, and where canine detection actually helps versus where it does not. Guardian is a detection-only company, so nothing here is written to sell you a treatment.`;
+
+const faqs = [
+  { q: 'Should I get an inspection or just treat?', a: 'Treating without confirming is how properties end up paying for repeated treatments in the wrong rooms. Confirming what is actually present, and where, is what makes any treatment targeted.' },
+  { q: 'Can a dog tell me how bad it is?', a: 'No. A detection dog tells you where the odour is, not how many insects are present. Severity is assessed by the visual confirmation that follows every alert.' },
+  { q: 'How soon can you come out?', a: 'Single-unit and single-room work is usually quicker to place than building-wide sweeps, which are scheduled in advance.' },
+  { q: 'What if the dog finds nothing?', a: 'You get a written all-clear stating what was searched and what was not. That document is often the point of the visit, especially where a complaint needs to be answered.' },
+  { q: 'Do you sell the treatment afterwards?', a: 'No, and that is deliberate. Guardian applies no pesticides and sells no treatment, so the report has no commercial direction to lean in.' },
+  { q: 'What does it cost?', a: 'Cost is driven by the number of spaces, the total area, travel distance and turnaround requirement rather than a flat rate.' },
+];
+
+const r = await resolve(route, { answer, faqs });
+const wiring = wireProblem(s.slug, p.slug);
+---
+<BaseLayout
+  title={p.title}
+  description={`${p.title} — what is usually going on, what to check first, and where independent canine detection helps. Detection only; we never sell the treatment.`}
+  path={route}
+  breadcrumbs={[
+    {name:'Home',path:'/'},
+    {name:'Services',path:'/services/'},
+    {name:s.name,path:`/services/${s.slug}/`},
+    {name:p.title,path:route},
+  ]}
+  faqs={r.faqs}
+  draft={r.draft}
+  dateModified={r.dateModified}
+  pageType={{ kind: 'article' }}
+>
+  <div class="wrap">
+    <h1>{p.title}</h1>
+    <AnswerBox answer={r.answer} />
+    <MdBody entry={r.body} />
+    <WiringNav wiring={wiring} />
+    <Faq faqs={r.faqs} />
+  </div>
+  <Cta heading="Get it confirmed before you spend on treatment" />
+</BaseLayout>
