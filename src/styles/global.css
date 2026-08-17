@@ -310,18 +310,27 @@ strong{font-weight:700; color:var(--tiffany-ink);}
   border-radius:var(--r-sm); padding:14px 18px;
 }
 
-/* --- body content: lists and prose ------------------------------------ */
-main article ul, main article ol{padding-left:1.35rem;}
-main article li{margin-bottom:.5rem;}
-main article ul{list-style:none; padding-left:0;}
-main article ul li{position:relative; padding-left:1.5rem;}
-main article ul li::before{
+/* --- body content: lists and prose ------------------------------------
+   Applied to every list in <main>, not just markdown bodies, so the
+   data-driven scaffold lists match the written ones instead of falling back
+   to flat default bullets. Components that style their own lists opt out below. */
+main ul{list-style:none; padding-left:0;}
+main li{margin-bottom:.5rem;}
+main ul li{position:relative; padding-left:1.55rem;}
+main ul li::before{
   content:""; position:absolute; left:0; top:.62em;
   width:8px; height:8px; border-radius:2px;
   background:linear-gradient(135deg, var(--tiffany), var(--tiffany-shade));
 }
-main article ol li::marker{color:var(--tiffany-deep); font-weight:700;}
+main ol{padding-left:1.35rem;}
+main ol li::marker{color:var(--tiffany-deep); font-weight:700;}
 main article p{margin:0 0 1.15em;}
+
+/* Opt-outs: the wiring nav renders pills, the citations list is numbered. */
+.wiring ul li{padding-left:0;}
+.wiring ul li::before{content:none;}
+.citations li{padding-left:0;}
+.citations li::before{content:none;}
 
 /* --- draft banner: deliberately outside the brand palette -------------
    A warning styled in the brand accent stops reading as a warning. */
