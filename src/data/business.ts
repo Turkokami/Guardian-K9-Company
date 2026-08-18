@@ -109,6 +109,8 @@ export const business = {
    * it into a 38px slot would push half a megabyte onto every page load.
    */
   logoMark: '/img/guardian-k9-logo-mark.png',
+  /** Hero-scale rendition of the badge. Rendered large on the homepage. */
+  logoLarge: '/img/guardian-k9-badge-480.jpg',
   socialImage: '/img/guardian-k9-social.jpg',// B-11: M7 shared hero/social image
   socialImageWidth: 1200,
   socialImageHeight: 630,
