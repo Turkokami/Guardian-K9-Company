@@ -18,23 +18,27 @@
      · On black, use the bright variants. */
 
 :root{
-  /* ---- brand palette -------------------------------------------------- */
-  --tiffany:#0abab5;
-  --tiffany-lift:#2ecfca;   /* hover on tiffany surfaces */
-  --tiffany-bright:#5fe3de; /* on black / deep tiffany only */
-  --tiffany-shade:#0a7a76;  /* dark enough to carry white text */
-  --tiffany-deep:#08615e;   /* text and links on light backgrounds */
-  --tiffany-ink:#04302e;    /* deepest, for gradient ends */
-  --tiffany-pale:#e6faf9;   /* panel fills */
-  --tiffany-mist:#f3fbfa;   /* page tint */
+  /* ---- brand palette --------------------------------------------------
+     Tuned against the official badge (public/img/README.md). Tiffany blue stays the
+     named brand primary, with the deeper stops pulled slightly bluer so the header and
+     hero sit in the same family as the badge's teal ring rather than beside it. Gold is
+     warmed to the rope colour. */
+  --tiffany:#0ab6b8;
+  --tiffany-lift:#2ecdcf;   /* hover on tiffany surfaces */
+  --tiffany-bright:#5ee0e4; /* on black / deep tiffany only */
+  --tiffany-shade:#0a757e;  /* dark enough to carry white text */
+  --tiffany-deep:#075e66;   /* text and links on light backgrounds */
+  --tiffany-ink:#052a30;    /* deepest, for gradient ends — the badge ring */
+  --tiffany-pale:#e6f9fa;   /* panel fills */
+  --tiffany-mist:#f3fbfb;   /* page tint */
 
-  --gold:#c9a227;
-  --gold-bright:#e8c243;
-  --gold-deep:#7d6412;
+  --gold:#cfa23a;           /* the rope */
+  --gold-bright:#eac765;    /* rope highlight */
+  --gold-deep:#7a5f11;      /* gold-family text on light backgrounds */
 
-  --black:#0b0d0d;
-  --black-soft:#171b1b;
-  --off-white:#f7f9f8;
+  --black:#0b0f12;          /* the badge plate */
+  --black-soft:#161c20;
+  --off-white:#f7f9f9;
 
   /* ---- semantic tokens (the component API — names deliberately stable) -- */
   --navy:var(--black);
@@ -135,9 +139,11 @@ strong{font-weight:700; color:var(--tiffany-ink);}
 .site-header nav{display:flex; flex-wrap:wrap; gap:1.15rem; align-items:center; padding:15px 0;}
 .brand{
   font-weight:800; letter-spacing:-0.02em; font-size:1.1rem;
-  margin-right:auto; display:flex; align-items:center; gap:.65rem;
+  margin-right:auto; display:flex; align-items:center; gap:.6rem;
 }
-.brand img{height:38px; width:auto;}
+/* The badge is circular with its own dark plate, so it needs no frame from us. */
+.brand img{height:38px; width:38px; object-fit:contain; flex:none;}
+.brand span{white-space:nowrap;}
 
 /* --- hero: the boldest surface on the site ---------------------------- */
 .hero{

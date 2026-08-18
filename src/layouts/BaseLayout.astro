@@ -7,6 +7,7 @@ import '../styles/global.css';
 import { business } from '../data/business';
 import { buildGraph, type Breadcrumb, type Faq } from '../lib/schema';
 import { buildTitle, buildDescription } from '../lib/seo';
+import { publicAssetExists } from '../lib/assets';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import PhoneBar from '../components/PhoneBar.astro';
@@ -33,7 +34,19 @@ const {
 const t = buildTitle(title);
 const d = buildDescription(description);
 const canonical = `${business.siteUrl}${path}`;
-const ogImage = `${business.siteUrl}${image ?? business.socialImage}`;
+
+/**
+ * M7 — every page carries a social image, and harness check 2 requires the tag to exist on
+ * every page, so this always resolves to a URL. It prefers the first candidate actually on
+ * disk (page image, then the shared social image, then the logo) and only falls back to the
+ * declared social image path when none of them are there yet (B-11). The tag never
+ * disappears; it just starts pointing at a real file the moment one lands.
+ */
+const ogCandidate =
+  [image, business.socialImage, business.logo].find(publicAssetExists) ??
+  image ??
+  business.socialImage;
+const ogImage = `${business.siteUrl}${ogCandidate}`;
 
 const graph = buildGraph({
   path, title: t, description: d, image, breadcrumbs, faqs, dateModified, pageType,
