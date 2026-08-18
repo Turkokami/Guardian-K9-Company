@@ -8,7 +8,7 @@ import Cta from '../components/Cta.astro';
 import MdBody from '../components/MdBody.astro';
 import { services } from '../data/services';
 import { buildableVerticals } from '../data/verticals';
-import { cities } from '../data/cities';
+import { cities, areaOnlyCities, orderedCounties, PRIME_COUNTIES } from '../data/cities';
 import { business } from '../data/business';
 import { publicAssetExists } from '../lib/assets';
 import { resolve } from '../lib/body';
@@ -19,6 +19,8 @@ const banner = publicAssetExists(business.banner) ? business.banner : null;
 const bannerSrcset = business.bannerWidths
   .map(w => `/img/guardian-k9-banner-${w}.jpg ${w}w`)
   .join(', ');
+const counties = orderedCounties();
+const isPrime = (county: string) => (PRIME_COUNTIES as readonly string[]).includes(county);
 const answer = 'Guardian K9 Company provides independent canine bed bug detection and K9 Canada goose deterrent programs across Washington State. We do not apply pesticides and we do not sell treatment, so our findings have nothing to steer. Every alert is visually confirmed before it appears in your written, dated report.';
 const faqs = [
   { q: 'Do you treat bed bugs?', a: 'No. Guardian is a detection-only business. We apply no pesticides and sell no treatment, which is precisely why our report has no commercial direction to lean in. If we find something, you engage a licensed applicator of your choosing.' },
@@ -69,13 +71,51 @@ const r = await resolve(route, { answer, faqs });
     <AnswerBox answer={r.answer} />
 
     <h2>What we do</h2>
-    <ul>{services.map(s => <li><a href={`/services/${s.slug}/`}>{s.name}</a></li>)}</ul>
+    <div class="card-grid">
+      {services.map(s => (
+        <a class="card" href={`/services/${s.slug}/`}>
+          <span class="card-kicker">{s.family === 'goose' ? 'Grounds programs' : 'Bed bug detection'}</span>
+          <h3>{s.name}</h3>
+          <p>{s.blurb}</p>
+          <span class="card-go">Read more</span>
+        </a>
+      ))}
+    </div>
 
     <h2>Who we do it for</h2>
-    <ul>{buildableVerticals.map(v => <li><a href={`/commercial/${v.slug}/`}>{v.name}</a> — {v.audience}</li>)}</ul>
+    <div class="card-grid card-grid-tight">
+      {buildableVerticals.map(v => (
+        <a class="card" href={`/commercial/${v.slug}/`}>
+          <h3>{v.name}</h3>
+          <p>{v.audience}</p>
+          <span class="card-go">See the programme</span>
+        </a>
+      ))}
+    </div>
 
     <h2>Where we work</h2>
-    <ul>{cities.filter(c => c.cluster !== 'area').map(c => <li><a href={`/service-area/${c.slug}/`}>{c.name}</a>, {c.county} County</li>)}</ul>
+    <p class="geo-lede">
+      Whatcom and Skagit are the prime work zones and carry the bulk of the schedule.
+      Everywhere else in Washington is booked in advance rather than same-day.
+    </p>
+    <div class="geo">
+      {counties.map(county => (
+        <section class="geo-group">
+          <h3>
+            {county} County
+            {isPrime(county) && <span class="tag-prime">Prime</span>}
+          </h3>
+          <ul class="chips">
+            {cities.filter(c => c.county === county && c.cluster !== 'area').map(c => (
+              <li><a class="chip" href={`/service-area/${c.slug}/`}>{c.name}</a></li>
+            ))}
+            {areaOnlyCities.filter(c => c.county === county).map(c => (
+              <li><span class="chip chip-static" title="Covered, no page of its own">{c.name}</span></li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
 
     <TeamBlock />
 

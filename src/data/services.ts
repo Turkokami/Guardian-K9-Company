@@ -8,6 +8,8 @@ export interface Service {
   name: string;              // H1 / nav label
   title: string;             // <title>, <= 60 chars, validated by scripts/seo-audit.mjs
   shortName: string;         // for cross-links and breadcrumbs
+  /** One line, used on cards. Must survive the C1 detection-only rules like any other copy. */
+  blurb: string;
   order: number;
   family: 'bedbug' | 'goose';
   schemaServiceType: string;
@@ -23,6 +25,7 @@ export const services: Service[] = [
     name: 'K9 Bed Bug Detection',
     title: 'K9 Bed Bug Detection Inspections | Washington',
     shortName: 'Bed bug detection',
+    blurb: 'A handler and dog search the space. Every alert is visually confirmed before it is recorded.',
     order: 1,
     family: 'bedbug',
     schemaServiceType: 'Canine bed bug detection inspection',
@@ -40,6 +43,7 @@ export const services: Service[] = [
     name: 'Post-Treatment Verification',
     title: 'Post-Treatment Bed Bug Verification Inspections',
     shortName: 'Verification inspections',
+    blurb: 'An independent check after somebody else has treated. We did not do the work being assessed.',
     order: 2,
     family: 'bedbug',
     schemaServiceType: 'Post-treatment bed bug verification inspection',
@@ -51,6 +55,7 @@ export const services: Service[] = [
     name: 'Move-In / Move-Out Screening',
     title: 'Move-In and Move-Out Bed Bug Screening | WA',
     shortName: 'Turnover screening',
+    blurb: 'The cheapest search there is, because the unit is empty and nothing is in the way.',
     order: 3,
     family: 'bedbug',
     schemaServiceType: 'Tenant turnover bed bug screening',
@@ -62,6 +67,7 @@ export const services: Service[] = [
     name: 'Building-Wide Sweeps',
     title: 'Building-Wide Canine Bed Bug Sweeps | Multifamily',
     shortName: 'Building-wide sweeps',
+    blurb: 'Every unit in sequence, with the doors that did not open listed by number.',
     order: 4,
     family: 'bedbug',
     schemaServiceType: 'Building-wide canine bed bug sweep',
@@ -73,6 +79,7 @@ export const services: Service[] = [
     name: 'K9 Goose Deterrent',
     title: 'K9 Canada Goose Deterrent Programs | Washington',
     shortName: 'Goose deterrent',
+    blurb: 'Handler-directed hazing on managed ground. No contact, no injury, no nests disturbed.',
     order: 5,
     family: 'goose',
     schemaServiceType: 'Canine Canada goose hazing and deterrent program',

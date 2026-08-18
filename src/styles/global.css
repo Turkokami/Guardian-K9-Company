@@ -193,6 +193,77 @@ strong{font-weight:700; color:var(--tiffany-ink);}
 .hero .lede{font-size:clamp(1.1rem,1.7vw,1.3rem); color:#cdeeec; max-width:58ch;}
 .hero a:not(.btn){color:var(--tiffany-bright); text-decoration-color:rgba(95,227,222,.5);}
 
+/* --- cards: services and verticals ------------------------------------ */
+.card-grid{
+  display:grid; gap:18px; margin:26px 0 8px;
+  grid-template-columns:repeat(auto-fit, minmax(290px, 1fr));
+}
+.card-grid-tight{grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));}
+.card{
+  display:flex; flex-direction:column; gap:.35rem;
+  background:linear-gradient(180deg, var(--white), var(--tiffany-mist));
+  border:1px solid var(--line);
+  border-top:4px solid var(--tiffany);
+  border-radius:var(--r-md);
+  padding:22px 24px 20px;
+  text-decoration:none; color:var(--ink);
+  box-shadow:var(--shadow-1);
+  transition:transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease);
+}
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--shadow-3);
+  border-top-color:var(--gold);
+  color:var(--ink);
+}
+.card-kicker{
+  font-size:.7rem; font-weight:800; letter-spacing:.11em; text-transform:uppercase;
+  color:var(--tiffany-deep);
+}
+.card h3{margin:.1rem 0 .2rem; color:var(--tiffany-ink); font-size:1.16rem;}
+.card p{margin:0; font-size:.97rem; color:var(--muted); line-height:1.55;}
+.card-go{
+  margin-top:auto; padding-top:.9rem;
+  font-weight:700; font-size:.92rem; color:var(--tiffany-deep);
+}
+.card-go::after{content:" →"; transition:margin-left .2s var(--ease);}
+.card:hover .card-go{color:var(--gold-deep);}
+.card:hover .card-go::after{margin-left:.25rem;}
+
+/* --- geography: county groups of chips --------------------------------- */
+.geo-lede{max-width:62ch; color:var(--muted);}
+.geo{display:grid; gap:16px; margin:24px 0 8px;
+     grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));}
+.geo-group{
+  background:var(--white); border:1px solid var(--line);
+  border-radius:var(--r-md); padding:18px 20px 20px;
+  box-shadow:var(--shadow-1);
+}
+.geo-group h3{
+  margin:0 0 .8rem; font-size:.82rem; text-transform:uppercase;
+  letter-spacing:.11em; color:var(--tiffany-deep); font-weight:800;
+  display:flex; align-items:center; flex-wrap:wrap; gap:.2rem;
+}
+.chips{list-style:none; padding:0; margin:0; display:flex; flex-wrap:wrap; gap:.45rem;}
+.chips li{margin:0; padding-left:0;}
+.chips li::before{content:none;}
+.chip{
+  display:inline-block; padding:.42rem .85rem;
+  background:var(--tiffany-pale); border:1px solid var(--line);
+  border-radius:999px; text-decoration:none;
+  font-size:.93rem; font-weight:600; color:var(--tiffany-deep);
+  transition:background .18s var(--ease), border-color .18s var(--ease),
+             transform .18s var(--ease), color .18s var(--ease);
+}
+a.chip:hover{
+  background:var(--tiffany); border-color:var(--tiffany); color:var(--black);
+  transform:translateY(-1px);
+}
+/* Towns covered but too small for a page of their own: shown, not linked. */
+.chip-static{
+  background:transparent; border-style:dashed; color:var(--muted); font-weight:500;
+}
+
 /* --- AEO quick answer (M4 speakable target): a raised card ------------- */
 .answer{
   background:linear-gradient(180deg, var(--white), var(--tiffany-pale));
