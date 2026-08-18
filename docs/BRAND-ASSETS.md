@@ -67,3 +67,45 @@ These are the values the design tokens in `src/styles/global.css` are tuned agai
    detection-only discipline in `CONTENT_BRIEF.md`: Guardian does not treat and does not
    prevent. It is fine inside the mark. It should not be repeated as a text claim in body
    copy, because that is where it would read as a service promise.
+
+---
+
+## The banner carries three claims the linter cannot see — needs a decision
+
+`guardian-k9-banner-*.jpg` has marketing copy baked into the artwork. The compliance grep
+suite in `scripts/run-harness.mjs` scans rendered **text**. These are **pixels**, so check 6
+passes and always will, no matter what the image says. That is the whole reason this section
+exists.
+
+Three of the baked-in lines sit against `CONTENT_BRIEF.md` section 1:
+
+| On the banner | The problem |
+|---|---|
+| **ADVANCED DETECTION** — "Finding what others miss." | A comparative superiority claim. The entire `/detection-accuracy/` page is built on the opposite position: the published field research shows canine detection varies enormously *between teams*, and we deliberately publish that rather than a flattering number. An unsupported "better than others" claim is the Consumer Protection Act (ch. 19.86 RCW) exposure that rule C2 exists to avoid. |
+| **RELIABLE PROTECTION** — "Keeping what matters safe." | Implies Guardian protects. Guardian detects. |
+| **PROACTIVE PREVENTION** — "Stopping problems before they start." | The most serious of the three. Guardian does not prevent, cannot prevent, and prevention work is licensed applicator activity. Every page of prose on this site says detection only, no treatment. The banner says the opposite, in larger type, above the fold. |
+
+The same tension applies to **DETECT. PROTECT. PREVENT.**, which also appears in the logo
+badge. Inside a mark it reads as a slogan. Beside three feature callouts explaining what each
+word means as a service, it reads as a service list.
+
+### Why this is worth fixing rather than living with
+
+The site's whole competitive position is that it concedes what competitors overstate. A
+visitor who reads "Stopping problems before they start" in the banner and then reads "we do
+not treat and we do not prevent" four paragraphs down does not conclude the company is
+careful. They conclude one of the two is untrue.
+
+### Options, in order of preference
+
+1. **Re-export the banner without the three right-hand callouts.** The badge, the mountains
+   and the DETECT/PROTECT/PREVENT lockup all stay. This is a crop or a layer toggle for
+   whoever produced it, and it removes the whole problem.
+2. **Reword the callouts** to things Guardian actually does: *Independent detection — we sell
+   no treatment.* / *Documented findings — every alert visually confirmed.* / *Defensible
+   reports — dated, signed, retained.*
+3. **Leave it**, with the client accepting the exposure in writing. It is their mark and
+   their call, but it should be a decision rather than an oversight.
+
+Until it is decided, none of those three phrases appears anywhere in the site's prose, and
+the alt text describes the scene rather than repeating the claims.
