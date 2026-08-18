@@ -145,7 +145,7 @@ strong{font-weight:700; color:var(--tiffany-ink);}
    alpha), so it is cropped to a circle here rather than sitting as a dark box on the
    teal header. The badge's own outer ring is dark, so the crop reads as its edge. */
 .brand img{
-  height:38px; width:38px; flex:none;
+  height:46px; width:46px; flex:none;
   object-fit:cover; border-radius:50%;
   box-shadow:0 0 0 1px rgba(255,255,255,.22), 0 2px 8px rgba(0,0,0,.35);
 }

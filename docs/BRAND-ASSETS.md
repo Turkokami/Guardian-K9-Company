@@ -13,12 +13,12 @@ shipping a broken image.
 | File | Size | Used by |
 |---|---|---|
 | `guardian-k9-logo.png` | 512×512 | schema `Organization.logo` and the `#logo` ImageObject node |
-| `guardian-k9-logo-mark.png` | 128×128 | the header brand mark, rendered at 38px |
+| `guardian-k9-logo-mark.png` | 128×128 | the header brand mark, rendered at 46px |
 | `guardian-k9-social.jpg` | 1200×630 | `og:image` and `twitter:image` on every page (mandate M7) |
 
 ### Why there is a separate 128px mark
 
-The 512px PNG is roughly 490 KB. Serving that into a 38px header slot would put half a
+The 512px PNG is roughly 490 KB. Serving that into a 46px header slot would put half a
 megabyte on every page load for something the size of a thumbnail. The small rendition is
 about 37 KB. The large file remains canonical for schema and social, where consumers
 genuinely want the full-resolution badge.
@@ -36,7 +36,7 @@ give a cleaner mark on any background.
 The official circular badge: rope border, spaniel, mountains, bed bug and goose icons,
 "GUARDIAN K-9 COMPANY / DETECTION SERVICES / DETECT. PROTECT. PREVENT."
 
-Export square with a transparent background. The header renders it at 38px tall, so check
+Export square with a transparent background. The header renders it at 46px tall, so check
 that the wordmark inside the badge is still legible at that size — if it is not, consider a
 second simplified mark for the header and keep the full badge for schema and social.
 
