@@ -21,6 +21,10 @@ const bannerSrcset = business.bannerWidths
   .join(', ');
 const counties = orderedCounties();
 const isPrime = (county: string) => (PRIME_COUNTIES as readonly string[]).includes(county);
+const primeCounties = counties.filter(isPrime);
+const otherCounties = counties.filter(c => !isPrime(c));
+const townsIn = (county: string) => cities.filter(c => c.county === county && c.cluster !== 'area');
+const areaTownsIn = (county: string) => areaOnlyCities.filter(c => c.county === county);
 const answer = 'Guardian K9 Company provides independent canine bed bug detection and K9 Canada goose deterrent programs across Washington State. We do not apply pesticides and we do not sell treatment, so our findings have nothing to steer. Every alert is visually confirmed before it appears in your written, dated report.';
 const faqs = [
   { q: 'Do you treat bed bugs?', a: 'No. Guardian is a detection-only business. We apply no pesticides and sell no treatment, which is precisely why our report has no commercial direction to lean in. If we find something, you engage a licensed applicator of your choosing.' },
@@ -98,22 +102,34 @@ const r = await resolve(route, { answer, faqs });
       Whatcom and Skagit are the prime work zones and carry the bulk of the schedule.
       Everywhere else in Washington is booked in advance rather than same-day.
     </p>
-    <div class="geo">
-      {counties.map(county => (
-        <section class={`geo-group${isPrime(county) ? ' is-prime' : ''}`}>
-          <h3>
-            {county} County
-            {isPrime(county) && <span class="tag-prime">Prime</span>}
-          </h3>
-          <ul class="chips">
-            {cities.filter(c => c.county === county && c.cluster !== 'area').map(c => (
-              <li><a class="chip" href={`/service-area/${c.slug}/`}>{c.name}</a></li>
+
+    <div class="geo-prime">
+      {primeCounties.map(county => (
+        <section class="geo-card">
+          <h3>{county} County<span class="tag-prime">Prime work zone</span></h3>
+          <ul class="citybtns">
+            {townsIn(county).map(c => (
+              <li><a class="citybtn" href={`/service-area/${c.slug}/`}>{c.name}</a></li>
             ))}
-            {areaOnlyCities.filter(c => c.county === county).map(c => (
-              <li><span class="chip chip-static" title="Covered, no page of its own">{c.name}</span></li>
+            {areaTownsIn(county).map(c => (
+              <li><span class="citybtn citybtn-static">{c.name}</span></li>
             ))}
           </ul>
         </section>
+      ))}
+    </div>
+
+    <p class="geo-subhead">Also served, on a booked schedule</p>
+    <div class="geo-rest">
+      {otherCounties.map(county => (
+        <div class="geo-row">
+          <span class="geo-row-label">{county} County</span>
+          <ul class="citybtns citybtns-row">
+            {townsIn(county).map(c => (
+              <li><a class="citybtn" href={`/service-area/${c.slug}/`}>{c.name}</a></li>
+            ))}
+          </ul>
+        </div>
       ))}
     </div>
 

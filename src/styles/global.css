@@ -194,11 +194,15 @@ strong{font-weight:700; color:var(--tiffany-ink);}
 .hero a:not(.btn){color:var(--tiffany-bright); text-decoration-color:rgba(95,227,222,.5);}
 
 /* --- cards: services and verticals ------------------------------------ */
+/* Flex rather than grid so a short final row centres instead of sitting
+   left-aligned against a gap, which reads as missing content. Cards still grow
+   to fill a full row; max-width stops two orphans stretching the whole width. */
 .card-grid{
-  display:grid; gap:18px; margin:26px 0 8px;
-  grid-template-columns:repeat(auto-fit, minmax(290px, 1fr));
+  display:flex; flex-wrap:wrap; justify-content:center;
+  gap:18px; margin:26px 0 8px;
 }
-.card-grid-tight{grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));}
+.card{flex:1 1 290px; max-width:372px;}
+.card-grid-tight .card{flex-basis:250px; max-width:312px;}
 .card{
   display:flex; flex-direction:column; gap:.35rem;
   background:linear-gradient(180deg, var(--white), var(--tiffany-mist));
@@ -230,45 +234,100 @@ strong{font-weight:700; color:var(--tiffany-ink);}
 .card:hover .card-go{color:var(--gold-deep);}
 .card:hover .card-go::after{margin-left:.25rem;}
 
-/* --- geography: county groups of chips --------------------------------- */
+/* --- geography: prime county cards, then compact rows ------------------
+   Cities render as uniform rectangular buttons on a grid rather than
+   variable-width pills, so the right edge lines up instead of running ragged.
+   Counties with one or two towns get a row rather than a whole card; seven
+   sparse cards was a lot of chrome around very little content. */
 .geo-lede{max-width:62ch; color:var(--muted);}
-.geo{display:grid; gap:16px; margin:24px 0 8px; align-items:start;
-     grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));}
-.geo-group{
-  background:var(--white); border:1px solid var(--line);
-  border-radius:var(--r-md); padding:18px 20px 20px;
-  box-shadow:var(--shadow-1);
+
+.geo-prime{
+  display:grid; gap:18px; margin:24px 0 34px; align-items:start;
+  grid-template-columns:repeat(auto-fit, minmax(340px, 1fr));
 }
-/* The prime work zones carry visible weight rather than only a badge. */
-.geo-group.is-prime{
-  border-top:4px solid var(--tiffany);
+.geo-card{
   background:linear-gradient(180deg, var(--tiffany-pale), var(--white));
+  border:1px solid var(--line);
+  border-top:4px solid var(--tiffany);
+  border-radius:var(--r-md);
+  padding:20px 22px 22px;
   box-shadow:var(--shadow-2);
 }
-.geo-group.is-prime .chip{background:var(--white);}
-.geo-group h3{
-  margin:0 0 .8rem; font-size:.82rem; text-transform:uppercase;
+.geo-card h3{
+  margin:0 0 1rem; font-size:.84rem; text-transform:uppercase;
   letter-spacing:.11em; color:var(--tiffany-deep); font-weight:800;
-  display:flex; align-items:center; flex-wrap:wrap; gap:.2rem;
+  display:flex; align-items:center; flex-wrap:wrap; gap:.15rem;
 }
-.chips{list-style:none; padding:0; margin:0; display:flex; flex-wrap:wrap; gap:.45rem;}
-.chips li{margin:0; padding-left:0;}
-.chips li::before{content:none;}
-.chip{
-  display:inline-block; padding:.42rem .85rem;
-  background:var(--tiffany-pale); border:1px solid var(--line);
-  border-radius:999px; text-decoration:none;
-  font-size:.93rem; font-weight:600; color:var(--tiffany-deep);
-  transition:background .18s var(--ease), border-color .18s var(--ease),
-             transform .18s var(--ease), color .18s var(--ease);
+
+.geo-subhead{
+  margin:0 0 .9rem; font-size:.78rem; text-transform:uppercase;
+  letter-spacing:.13em; font-weight:800; color:var(--muted);
 }
-a.chip:hover{
-  background:var(--tiffany); border-color:var(--tiffany); color:var(--black);
-  transform:translateY(-1px);
+.geo-rest{
+  display:flex; flex-direction:column; gap:0;
+  background:var(--white); border:1px solid var(--line);
+  border-radius:var(--r-md); box-shadow:var(--shadow-1); overflow:hidden;
 }
-/* Towns covered but too small for a page of their own: shown, not linked. */
-.chip-static{
-  background:transparent; border-style:dashed; color:var(--muted); font-weight:500;
+.geo-row{
+  display:grid; gap:12px 20px; align-items:center;
+  grid-template-columns:190px minmax(0,1fr);
+  padding:14px 20px;
+  border-bottom:1px solid var(--line);
+}
+.geo-row:last-child{border-bottom:none;}
+.geo-row:nth-child(2n){background:var(--tiffany-mist);}
+.geo-row-label{
+  font-size:.78rem; text-transform:uppercase; letter-spacing:.11em;
+  font-weight:800; color:var(--tiffany-deep);
+}
+
+/* --- city buttons: rectangles with depth ------------------------------- */
+.citybtns{
+  display:grid; gap:10px; list-style:none; padding:0; margin:0;
+  grid-template-columns:repeat(auto-fill, minmax(152px, 1fr));
+}
+.citybtns-row{grid-template-columns:repeat(auto-fill, minmax(140px, 1fr));}
+.citybtns li{margin:0; padding-left:0;}
+.citybtns li::before{content:none;}
+
+.citybtn{
+  display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+  padding:.72rem .9rem;
+  background:linear-gradient(180deg, var(--white), var(--tiffany-mist));
+  border:1px solid var(--line);
+  border-left:3px solid var(--tiffany);
+  border-radius:var(--r-sm);
+  text-decoration:none;
+  font-size:.95rem; font-weight:700; color:var(--tiffany-ink);
+  box-shadow:0 1px 2px rgba(4,48,46,.07), 0 3px 10px rgba(4,48,46,.08);
+  transition:transform .18s var(--ease), box-shadow .18s var(--ease),
+             border-left-color .18s var(--ease), background .18s var(--ease);
+}
+.citybtn::after{
+  content:"→"; font-weight:800; color:var(--tiffany-deep);
+  transition:transform .18s var(--ease), color .18s var(--ease);
+}
+a.citybtn:hover{
+  transform:translateY(-2px);
+  background:linear-gradient(180deg, var(--white), var(--tiffany-pale));
+  border-left-color:var(--gold);
+  box-shadow:0 3px 6px rgba(4,48,46,.10), 0 10px 24px rgba(4,48,46,.16);
+  color:var(--tiffany-ink);
+}
+a.citybtn:hover::after{transform:translateX(3px); color:var(--gold-deep);}
+
+/* Covered, but too small to carry a page of its own — shown, never linked. */
+.citybtn-static{
+  background:transparent; border-style:dashed; border-left-color:var(--line);
+  color:var(--muted); font-weight:600; box-shadow:none; cursor:default;
+}
+.citybtn-static::after{
+  content:"covered"; font-size:.62rem; font-weight:700; letter-spacing:.07em;
+  text-transform:uppercase; color:var(--muted);
+}
+
+@media (max-width:620px){
+  .geo-row{grid-template-columns:1fr; gap:8px;}
 }
 
 /* --- AEO quick answer (M4 speakable target): a raised card ------------- */
