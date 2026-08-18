@@ -4,12 +4,12 @@ import AnswerBox from '../../components/AnswerBox.astro';
 import Faq from '../../components/Faq.astro';
 import Cta from '../../components/Cta.astro';
 import MdBody from '../../components/MdBody.astro';
-import { cities, areaOnlyCities, PRIME_COUNTIES } from '../../data/cities';
+import { cities, areaOnlyCities, orderedCounties, PRIME_COUNTIES } from '../../data/cities';
 import { resolve } from '../../lib/body';
 
 const route = '/service-area/';
-/** County order follows cities.ts array order, so the prime northern counties lead. */
-const counties = [...new Set(cities.filter(c => c.cluster !== 'area').map(c => c.county))];
+/** Whatcom first, then Skagit, then the rest. Explicit, not incidental — see cities.ts. */
+const counties = orderedCounties();
 const isPrime = (county: string) => (PRIME_COUNTIES as readonly string[]).includes(county);
 
 const answer = 'Guardian K9 Company is a Northern Washington canine detection business. Whatcom and Skagit counties are the prime work zones, covered on a regular schedule. We serve the rest of Washington State too, including the Puget Sound corridor, Spokane and Clark County, but that work is booked in advance rather than same-day.';

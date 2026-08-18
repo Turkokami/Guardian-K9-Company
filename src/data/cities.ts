@@ -387,9 +387,27 @@ export const cities: City[] = [
 export const fullCities = cities.filter(c => c.cluster === 'full');
 export const cityBySlug = (slug: string) => cities.find(c => c.slug === slug);
 
-/** The prime work zones. Drives ordering and emphasis, not just membership. */
+/**
+ * The prime work zones, in the order they must always be presented.
+ *
+ * WHATCOM LEADS. ALWAYS. Client direction, 2026-08-17. Bellingham is the anchor
+ * market and Whatcom is the first county a visitor should see, everywhere it matters.
+ * Skagit is second. Do not reorder this array to match alphabetical order, population,
+ * or anything else.
+ */
 export const PRIME_COUNTIES = ['Whatcom', 'Skagit'] as const;
 export const primeCities = cities.filter(c => (PRIME_COUNTIES as readonly string[]).includes(c.county));
+
+/**
+ * Canonical county display order. Prime counties first in PRIME_COUNTIES order, then
+ * everything else in array order. Exported so presentation order is an explicit,
+ * testable fact rather than a side effect of how the rows happen to be sorted above.
+ */
+export function orderedCounties(pool: City[] = cities.filter(c => c.cluster !== 'area')): string[] {
+  const seen = [...new Set(pool.map(c => c.county))];
+  const prime = (PRIME_COUNTIES as readonly string[]).filter(c => seen.includes(c));
+  return [...prime, ...seen.filter(c => !prime.includes(c))];
+}
 
 /** Towns covered as areaServed but too small to carry a page of genuine depth. */
 export const areaOnlyCities = cities.filter(c => c.cluster === 'area');
