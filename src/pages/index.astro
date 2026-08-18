@@ -100,7 +100,7 @@ const r = await resolve(route, { answer, faqs });
     </p>
     <div class="geo">
       {counties.map(county => (
-        <section class="geo-group">
+        <section class={`geo-group${isPrime(county) ? ' is-prime' : ''}`}>
           <h3>
             {county} County
             {isPrime(county) && <span class="tag-prime">Prime</span>}

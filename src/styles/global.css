@@ -232,13 +232,20 @@ strong{font-weight:700; color:var(--tiffany-ink);}
 
 /* --- geography: county groups of chips --------------------------------- */
 .geo-lede{max-width:62ch; color:var(--muted);}
-.geo{display:grid; gap:16px; margin:24px 0 8px;
+.geo{display:grid; gap:16px; margin:24px 0 8px; align-items:start;
      grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));}
 .geo-group{
   background:var(--white); border:1px solid var(--line);
   border-radius:var(--r-md); padding:18px 20px 20px;
   box-shadow:var(--shadow-1);
 }
+/* The prime work zones carry visible weight rather than only a badge. */
+.geo-group.is-prime{
+  border-top:4px solid var(--tiffany);
+  background:linear-gradient(180deg, var(--tiffany-pale), var(--white));
+  box-shadow:var(--shadow-2);
+}
+.geo-group.is-prime .chip{background:var(--white);}
 .geo-group h3{
   margin:0 0 .8rem; font-size:.82rem; text-transform:uppercase;
   letter-spacing:.11em; color:var(--tiffany-deep); font-weight:800;
