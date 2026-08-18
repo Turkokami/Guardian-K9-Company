@@ -170,29 +170,21 @@ strong{font-weight:700; color:var(--tiffany-ink);}
 }
 .hero > .wrap{position:relative; z-index:1;}
 
-/* Hero: copy and badge side by side, stacking under 900px with the badge first so the
-   brand mark still leads on a phone. */
-.hero-grid{
-  display:grid; gap:44px; align-items:center;
-  grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+/* --- brand banner: full-bleed band directly under the header ------------
+   The artwork is 2.5:1 with the badge centred, so it is allowed to letterbox
+   rather than being cropped to a fixed height. On narrow screens the detail at
+   the edges is lost to the aspect ratio, which is inherent to the art. */
+.banner{
+  background:var(--black);
+  border-bottom:5px solid var(--gold);
+  line-height:0;
 }
-.hero-copy{min-width:0;}
-.hero-badge{display:flex; justify-content:center;}
-.hero-badge img{
-  width:min(100%, 380px); height:auto; aspect-ratio:1;
-  border-radius:50%; object-fit:cover;
-  box-shadow:
-    0 0 0 3px rgba(95,227,222,.30),
-    0 0 0 10px rgba(207,162,58,.16),
-    0 26px 60px rgba(0,0,0,.55);
+.banner img{
+  display:block; width:100%; height:auto;
+  aspect-ratio:1983 / 793;
+  object-fit:cover;
 }
-@media (max-width:900px){
-  .hero-grid{grid-template-columns:1fr; gap:30px; justify-items:center; text-align:center;}
-  .hero-badge{order:-1;}
-  .hero-badge img{width:min(72vw, 260px);}
-  .hero h1{max-width:none;}
-  .hero .lede{margin-left:auto; margin-right:auto;}
-}
+
 .hero h1{
   color:var(--white); max-width:17ch;
   font-size:clamp(2.5rem,6.2vw,4.3rem);

@@ -109,8 +109,15 @@ export const business = {
    * it into a 38px slot would push half a megabyte onto every page load.
    */
   logoMark: '/img/guardian-k9-logo-mark.png',
-  /** Hero-scale rendition of the badge. Rendered large on the homepage. */
+  /** Hero-scale rendition of the badge. Kept for reuse; the homepage now leads with the banner. */
   logoLarge: '/img/guardian-k9-badge-480.jpg',
+  /**
+   * Full-width homepage banner. Source art is 1983x793 (2.5:1); these are the web
+   * renditions. `bannerWidths` drives the srcset so the browser picks by viewport.
+   */
+  banner: '/img/guardian-k9-banner-1280.jpg',
+  bannerWidths: [800, 1280, 1920],
+  bannerAspect: '1983 / 793',
   socialImage: '/img/guardian-k9-social.jpg',// B-11: M7 shared hero/social image
   socialImageWidth: 1200,
   socialImageHeight: 630,

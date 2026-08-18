@@ -14,8 +14,11 @@ import { publicAssetExists } from '../lib/assets';
 import { resolve } from '../lib/body';
 
 const route = '/';
-/** M7 — the badge carried at hero scale, guarded on the file existing (B-11). */
-const heroBadge = publicAssetExists(business.logoLarge) ? business.logoLarge : null;
+/** M7 — the brand banner across the top, guarded on the file existing (B-11). */
+const banner = publicAssetExists(business.banner) ? business.banner : null;
+const bannerSrcset = business.bannerWidths
+  .map(w => `/img/guardian-k9-banner-${w}.jpg ${w}w`)
+  .join(', ');
 const answer = 'Guardian K9 Company provides independent canine bed bug detection and K9 Canada goose deterrent programs across Washington State. We do not apply pesticides and we do not sell treatment, so our findings have nothing to steer. Every alert is visually confirmed before it appears in your written, dated report.';
 const faqs = [
   { q: 'Do you treat bed bugs?', a: 'No. Guardian is a detection-only business. We apply no pesticides and sell no treatment, which is precisely why our report has no commercial direction to lean in. If we find something, you engage a licensed applicator of your choosing.' },
@@ -36,26 +39,28 @@ const r = await resolve(route, { answer, faqs });
   dateModified={r.dateModified}
   pageType={{ kind: 'service', serviceType: 'Canine detection services', areaServed: ['Washington'] }}
 >
+  {banner && (
+    <section class="banner">
+      <img
+        src={banner}
+        srcset={bannerSrcset}
+        sizes="100vw"
+        width="1920" height="768"
+        alt="Guardian K9 Company badge set against Cascade mountains and evergreen forest"
+        fetchpriority="high" decoding="async"
+      />
+    </section>
+  )}
+
   <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-        <h1>An inspection with nothing to sell you</h1>
-        <p class="lede">
-          Canine bed bug detection and K9 goose deterrent programs for multifamily housing and
-          commercial facilities across Washington State. We apply no pesticides and sell no
-          treatment — so what the dog finds is the only thing driving the report.
-        </p>
-        <p><a class="btn" href="/contact/">Request an inspection</a></p>
-      </div>
-      {heroBadge && (
-        <div class="hero-badge">
-          <img
-            src={heroBadge}
-            alt="Guardian K9 Company badge showing a spaniel above bed bug and goose detection icons"
-            width="480" height="480" fetchpriority="high" decoding="async"
-          />
-        </div>
-      )}
+    <div class="wrap">
+      <h1>An inspection with nothing to sell you</h1>
+      <p class="lede">
+        Canine bed bug detection and K9 goose deterrent programs for multifamily housing and
+        commercial facilities across Washington State. We apply no pesticides and sell no
+        treatment — so what the dog finds is the only thing driving the report.
+      </p>
+      <p><a class="btn" href="/contact/">Request an inspection</a></p>
     </div>
   </section>
 
