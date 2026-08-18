@@ -103,6 +103,12 @@ export const business = {
   logo: '/img/guardian-k9-logo.png',         // B-11: 512x512 minimum
   logoWidth: 512,
   logoHeight: 512,
+  /**
+   * Small rendition of the same badge for the header, which renders it at 38px.
+   * The 512px file above stays the canonical logo for schema and social cards; serving
+   * it into a 38px slot would push half a megabyte onto every page load.
+   */
+  logoMark: '/img/guardian-k9-logo-mark.png',
   socialImage: '/img/guardian-k9-social.jpg',// B-11: M7 shared hero/social image
   socialImageWidth: 1200,
   socialImageHeight: 630,

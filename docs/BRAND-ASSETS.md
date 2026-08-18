@@ -1,18 +1,35 @@
 # Brand assets (blocker B-11)
 
-**Where the files go:** `public/img/` in this repo. That directory does not exist yet —
-create it when you add the first file. This note lives in `docs/` rather than in `public/`
-because everything under `public/` is copied to the live site, and the naming questions at
-the bottom are internal.
+**Where the files live:** `public/img/`. Source originals are in `Images/`. This note lives
+in `docs/` rather than in `public/` because everything under `public/` is copied to the live
+site, and the naming questions at the bottom are internal.
 
-Two files are referenced by `src/data/business.ts` and are **not yet in the repo**.
-Until each one exists, `src/lib/assets.ts` suppresses the reference rather than shipping
-a broken image. Drop the file in, rebuild, and it starts rendering everywhere at once.
+**Status: delivered and in the repo (2026-08-18).** Client supplied both files as JPEGs in
+`Images/`, which is kept as the source of truth. They were converted into `public/img/` in
+the formats `src/data/business.ts` references. `src/lib/assets.ts` still guards every
+reference, so if a file is ever removed the site degrades to the wordmark rather than
+shipping a broken image.
 
 | File | Size | Used by |
 |---|---|---|
-| `guardian-k9-logo.png` | 512×512 minimum, square, transparent background | Header brand mark, schema `Organization.logo` and the `#logo` ImageObject node, `og:image` fallback |
+| `guardian-k9-logo.png` | 512×512 | schema `Organization.logo` and the `#logo` ImageObject node |
+| `guardian-k9-logo-mark.png` | 128×128 | the header brand mark, rendered at 38px |
 | `guardian-k9-social.jpg` | 1200×630 | `og:image` and `twitter:image` on every page (mandate M7) |
+
+### Why there is a separate 128px mark
+
+The 512px PNG is roughly 490 KB. Serving that into a 38px header slot would put half a
+megabyte on every page load for something the size of a thumbnail. The small rendition is
+about 37 KB. The large file remains canonical for schema and social, where consumers
+genuinely want the full-resolution badge.
+
+### The transparency was lost before it reached us
+
+The delivered files are JPEG, which has no alpha channel, so the badge sits on a flattened
+solid black square. In the header it is cropped to a circle in CSS, which works because the
+badge is circular and its own outer ring is dark. **If a transparent PNG of the badge is
+available from whoever produced it, that is worth getting** — it would drop the CSS crop and
+give a cleaner mark on any background.
 
 ## guardian-k9-logo.png
 

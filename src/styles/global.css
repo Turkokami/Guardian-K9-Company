@@ -19,7 +19,7 @@
 
 :root{
   /* ---- brand palette --------------------------------------------------
-     Tuned against the official badge (public/img/README.md). Tiffany blue stays the
+     Tuned against the official badge (docs/BRAND-ASSETS.md). Tiffany blue stays the
      named brand primary, with the deeper stops pulled slightly bluer so the header and
      hero sit in the same family as the badge's teal ring rather than beside it. Gold is
      warmed to the rope colour. */
@@ -141,8 +141,14 @@ strong{font-weight:700; color:var(--tiffany-ink);}
   font-weight:800; letter-spacing:-0.02em; font-size:1.1rem;
   margin-right:auto; display:flex; align-items:center; gap:.6rem;
 }
-/* The badge is circular with its own dark plate, so it needs no frame from us. */
-.brand img{height:38px; width:38px; object-fit:contain; flex:none;}
+/* The supplied badge is a circle on a flattened black square (the source JPEG has no
+   alpha), so it is cropped to a circle here rather than sitting as a dark box on the
+   teal header. The badge's own outer ring is dark, so the crop reads as its edge. */
+.brand img{
+  height:38px; width:38px; flex:none;
+  object-fit:cover; border-radius:50%;
+  box-shadow:0 0 0 1px rgba(255,255,255,.22), 0 2px 8px rgba(0,0,0,.35);
+}
 .brand span{white-space:nowrap;}
 
 /* --- hero: the boldest surface on the site ---------------------------- */

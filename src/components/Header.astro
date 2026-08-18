@@ -7,14 +7,15 @@ import { publicAssetExists } from '../lib/assets';
  * missing asset renders as the wordmark alone rather than as a broken image (B-11).
  * M6 — a logo's alt text is the business name, nothing else.
  */
-const hasLogo = publicAssetExists(business.logo);
+const mark = publicAssetExists(business.logoMark) ? business.logoMark : business.logo;
+const hasLogo = publicAssetExists(mark);
 ---
 <header class="site-header">
   <div class="wrap">
     <nav aria-label="Primary">
       <a class="brand" href="/">
         {hasLogo && (
-          <img src={business.logo} alt={business.name} width="38" height="38" decoding="async" />
+          <img src={mark} alt={business.name} width="38" height="38" decoding="async" />
         )}
         <span>{business.name}</span>
       </a>
