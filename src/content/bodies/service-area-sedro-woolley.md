@@ -68,7 +68,7 @@ takes them as readily as an old one. What age changes is how far they can move o
 how many places they can be, and how long it takes to rule a room out. That is a cost
 question, and it is regularly misrepresented as a risk question by people selling something.
 
-Clutter matters more than either, and more than floor area. A heavily occupied small unit can
+Neither, though, moves the clock as much as how much is stored in a room. A heavily occupied small unit can
 take longer than a large sparse one, and where clutter or access prevents a proper search the
 space is recorded as inconclusive rather than clear.
 
@@ -76,10 +76,6 @@ space is recorded as inconclusive rather than clear.
 
 State law, with nothing added locally.
 
-**RCW 59.18.060(4)** requires a landlord to provide a reasonable pest control programme at
-the initiation of a tenancy and, other than in a single-family residence, to control
-infestation during the tenancy except where the tenant caused it. **RCW 59.18.130** sets out
-tenant duties and is the route to cost liability where the tenant is the cause.
 **RCW 59.18.150** requires at least two days written notice to enter and inspect.
 
 Sedro-Woolley adds no municipal provision naming bed bugs, and neither does the rest of
@@ -139,7 +135,7 @@ because a report in which every alert was confirmed should raise an eyebrow rath
 reassure. And anything we could not enter is listed rather than omitted.
 
 The practical advice for a public body is to start earlier than feels necessary. The
-inspection itself is quick; the authorisation is not. The standard the document is held to is
+inspection itself is quick; the authorisation is not. The bar it is written to is
 at [what makes a report defensible](/compliance/what-a-defensible-report-contains/).
 
 ## Does the highway season matter?
@@ -247,15 +243,6 @@ more than a series of separate visits. The programme structure is at
 
 ## What we will not do
 
-We do not treat, and we will not recommend a treatment method, product or active ingredient.
-That is separately licensed work in Washington under RCW 15.58.210 and we do not hold that
-licence. When we confirm something you engage a licensed applicator of your own choosing, and
-we take nothing from that referral. The reasoning is at
-[why independence is the product](/independent-detection/).
-
-We do not promise elimination, because we do not perform it. Where the word guarantee appears
-it is a defined term with written conditions covering our process rather than your outcome,
-set out at [our guarantee](/our-guarantee/).
 
 And for a single room, we will sometimes tell you that a careful visual inspection would
 answer your question faster and for less money than hiring us. That happens more often here

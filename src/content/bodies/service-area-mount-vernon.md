@@ -43,12 +43,6 @@ agricultural workforce housing segment that operates on entirely different rules
 
 The landlord, under state law, with two carve-outs that decide most disputes.
 
-**RCW 59.18.060(4)** requires a landlord to provide a reasonable pest control programme at
-the initiation of a tenancy and, other than in a single-family residence, to control
-infestation during the tenancy except where the infestation is caused by the tenant.
-**RCW 59.18.130** sets out tenant duties and is where liability for extermination costs
-comes from when the tenant is the cause. **RCW 59.18.150** governs entry notice, which is
-the provision that decides whether a building-wide sweep is workable or not.
 
 Mount Vernon adds nothing municipal on top. There is no local provision naming bed bugs
 here of the kind Seattle has in SMC 22.206.160.A.3, and no local penalty schedule. State
@@ -256,15 +250,6 @@ say so while quoting than discover it at four in the afternoon.
 
 ## What we will not do
 
-We do not treat, and we will not recommend a treatment method, a product or an active
-ingredient. That is separately licensed work in Washington and we do not hold that
-licence. When we confirm something you engage a licensed applicator of your choosing, and
-we take nothing from that referral. The reasoning is at
-[why independence is the product](/independent-detection/).
-
-We do not promise elimination, because we do not carry it out. Where the word guarantee is
-used it is a defined term with written conditions, set out at
-[our guarantee](/our-guarantee/), covering our process rather than your outcome.
 
 And we will not tell you we can be everywhere quickly. Skagit and Whatcom get the fastest
 turnaround because that is where the schedule sits. The rest of the state is booked

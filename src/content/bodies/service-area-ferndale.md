@@ -119,10 +119,6 @@ any of these situations, and it is covered at
 
 State law, without a municipal layer on top.
 
-**RCW 59.18.060(4)** requires a landlord to provide a reasonable pest control programme at
-the initiation of a tenancy and, other than in a single-family residence, to control
-infestation during the tenancy except where the tenant caused it. **RCW 59.18.130** sets out
-tenant duties and is the basis for cost liability where the tenant is the cause.
 **RCW 59.18.150** governs entry notice, and it is the constraint that determines whether a
 multi-unit inspection is workable.
 

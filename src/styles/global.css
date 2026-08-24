@@ -461,6 +461,26 @@ a.citybtn:hover::after{transform:translateX(3px); color:var(--gold-deep);}
 }
 .report ul{margin:.6rem 0 0;}
 
+/* --- component boilerplate blocks: legal basis and scope limits --------- */
+.legal-basis, .scope-limits{
+  background:var(--white); border:1px solid var(--line);
+  border-radius:var(--r-md); padding:22px 26px; margin:36px 0;
+  box-shadow:var(--shadow-1);
+}
+.legal-basis{border-left:5px solid var(--tiffany-shade);}
+.scope-limits{border-left:5px solid var(--muted); background:var(--tiffany-mist);}
+.legal-basis h2, .scope-limits h2{
+  font-size:.82rem; text-transform:uppercase; letter-spacing:.11em;
+  color:var(--tiffany-deep); font-weight:800; padding-top:0;
+}
+.legal-basis h2::before, .scope-limits h2::before{content:none;}
+.legal-basis dl{margin:.4rem 0 1rem;}
+.legal-basis dt{
+  font-weight:800; color:var(--tiffany-ink); margin-top:.9rem; font-size:.97rem;
+}
+.legal-basis dd{margin:.2rem 0 0; color:var(--ink); font-size:.96rem;}
+.scope-limits p{font-size:.97rem;}
+
 /* --- prime work zone tag ---------------------------------------------- */
 .tag-prime{
   display:inline-block; margin-left:.75rem; vertical-align:middle;

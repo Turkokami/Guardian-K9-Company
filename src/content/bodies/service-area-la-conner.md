@@ -132,11 +132,6 @@ before we ask about the calendar.
 
 State law for tenancies, and something different entirely for short stays.
 
-**RCW 59.18.060(4)** requires a landlord to provide a reasonable pest control programme at
-the initiation of a tenancy and, other than in a single-family residence, to control
-infestation during the tenancy except where the tenant caused it. **RCW 59.18.130** is the
-route to tenant cost liability where causation is established. **RCW 59.18.150** requires at
-least two days written notice to enter and inspect a tenanted unit.
 
 La Conner adds no municipal provision naming bed bugs, and neither does the rest of Skagit.
 Seattle is the statewide outlier, with bed bugs named explicitly and penalties running from
@@ -146,8 +141,7 @@ The distinction that matters most here is that **a guest room is not a tenancy**
 Landlord-tenant law is not the framework governing a nightly let or an inn room, and an owner
 holding both a long-term rental and short-stay accommodation is operating under two different
 sets of obligations at once. Small mixed operators frequently do not realise that, and a
-single internal policy written for one will be wrong for the other. The tenancy side is
-summarised at
+single internal policy written for one will be wrong for the other. For the tenancy half, see
 [who is responsible under Washington landlord-tenant law](/compliance/washington-landlord-tenant-bed-bugs/).
 
 ## What does the report do for a small operator?
@@ -243,21 +237,11 @@ we will schedule accordingly.
 
 ## What we will not do
 
-We do not treat, and we will not recommend a treatment method, product or active ingredient.
-That is separately licensed work in Washington under RCW 15.58.210 and we do not hold that
-licence. When we confirm something you engage a licensed applicator of your own choosing, and
-we take nothing from that referral. The reasoning is at
-[why independence is the product](/independent-detection/).
-
-We do not promise elimination, because we do not perform it. Where the word guarantee appears
-it is a defined term with written conditions covering our process rather than your outcome,
-set out at [our guarantee](/our-guarantee/).
 
 And we will not tell a small operator that a clean result certifies the property. It records
 what was searched on a date and that nothing was found, which is genuinely useful and is a
 narrower claim. If you want this scoped, tell us the room count and when your quiet weeks
-fall. The full map of where we are fast and where we are not is at
-[where we work](/service-area/).
+fall. The coverage picture, honestly drawn, is at [where we work](/service-area/).
 
 A final note about discretion, because in a town this size it is not a marketing line. Small
 communities talk, and an inspection van parked outside a named inn for an afternoon is a piece

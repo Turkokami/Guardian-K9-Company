@@ -113,11 +113,6 @@ document worth less rather than more.
 
 State law, with no municipal layer.
 
-**RCW 59.18.060(4)** requires a landlord to provide a reasonable pest control programme at
-the initiation of a tenancy and, other than in a single-family residence, to control
-infestation during the tenancy except where the tenant caused it. **RCW 59.18.130** is the
-route to tenant cost liability where causation is established. **RCW 59.18.150** requires at
-least two days written notice to enter and inspect a tenanted unit.
 
 Anacortes adds nothing naming bed bugs specifically, and neither does the rest of Skagit.
 Seattle is the exception statewide, where bed bugs are named explicitly and penalties run
@@ -245,15 +240,6 @@ The programme structure for multi-property clients is at
 
 ## What we will not do
 
-We do not treat, and we will not recommend a treatment method, product or active ingredient.
-That is separately licensed work in Washington under RCW 15.58.210 and we do not hold that
-licence. When we confirm something you engage a licensed applicator of your own choosing, and
-we take nothing from that referral. The reasoning is at
-[why independence is the product](/independent-detection/).
-
-We do not promise elimination, because we do not perform it. Where the word guarantee appears
-it is a defined term with written conditions covering our process rather than your outcome,
-set out at [our guarantee](/our-guarantee/).
 
 And we will not promise a same-day date that depends on a ferry. If you want this scoped,
 tell us the property type and count, where it sits, and whether a turnaround or a sailing is

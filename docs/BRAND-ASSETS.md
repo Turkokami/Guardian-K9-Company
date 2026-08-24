@@ -58,10 +58,14 @@ These are the values the design tokens in `src/styles/global.css` are tuned agai
 
 ## Two naming questions the logo raises — see B-8
 
-1. The badge reads **"GUARDIAN K-9 COMPANY"** with a hyphen. `business.name` is
-   **"Guardian K9 Company"** without one. NAP consistency requires the Google Business
-   Profile, the footer and the schema to match character for character, so this needs a
-   decision before launch rather than after.
+1. **RESOLVED, 2026-08-24: the name is "Guardian K9 Company", no hyphen.** Client decision.
+   `business.name` already held that value, so no code changed; this records the decision so
+   nobody "corrects" it to match the badge later. The badge artwork reads "GUARDIAN K-9
+   COMPANY" and that is fine — a logo is a mark, not a NAP string. **Everything that has to
+   match character for character must use "Guardian K9 Company" with no hyphen:** the Google
+   Business Profile name, every citation and directory listing, the footer, and the schema
+   `Organization.name`. If the GBP is created with the hyphen it will disagree with every
+   page on the site.
 2. The badge tagline is **"DETECT. PROTECT. PREVENT."** `business.tagline` is
    "Independent canine detection". The word *prevent* sits awkwardly beside the C1
    detection-only discipline in `CONTENT_BRIEF.md`: Guardian does not treat and does not

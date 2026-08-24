@@ -72,10 +72,6 @@ space we could not properly search recorded as inconclusive rather than clear.
 
 State law, with no municipal layer on top.
 
-**RCW 59.18.060(4)** requires a landlord to provide a reasonable pest control programme at
-the initiation of a tenancy and, other than in a single-family residence, to control
-infestation during the tenancy except where the tenant caused it. **RCW 59.18.130** sets out
-tenant duties and is the basis for cost liability where the tenant is the cause.
 **RCW 59.18.150** governs entry notice and requires at least two days written notice to
 enter and inspect.
 
@@ -191,7 +187,7 @@ Neither tells you anything about likelihood. Bed bugs travel with people and bel
 with buildings, and a new house takes them as readily as an old one. What building age
 changes is the time and therefore the cost of a thorough search, which is a quoting question.
 
-Clutter matters more than either, and more than floor area. A heavily occupied room can take
+How full a room is beats both, and beats floor area. A heavily occupied room can take
 longer than a large sparse one, and a space that cannot be searched properly is recorded as
 inconclusive rather than clear. That word appearing in a report is unsatisfying on the day
 and it is what keeps the rest of the document trustworthy.
@@ -243,15 +239,6 @@ anywhere else we work. The programme argument is at
 
 ## What we will not do here
 
-We do not treat, and we will not recommend a treatment method, a product or an active
-ingredient. That is separately licensed work in Washington under RCW 15.58.210 and we do not
-hold that licence. When we confirm something you engage a licensed applicator of your own
-choosing, and we take nothing from that referral. The reasoning is at
-[why independence is the product](/independent-detection/).
-
-We do not promise elimination, because we do not carry it out. Where the word guarantee
-appears it is a defined term with written conditions covering our process rather than your
-outcome, set out at [our guarantee](/our-guarantee/).
 
 And we will not tell you a single visit settles a property permanently. It establishes what
 was there on a date. For most operators of any size the useful thing is a cadence, and if

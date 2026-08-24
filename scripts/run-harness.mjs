@@ -142,6 +142,22 @@ console.log(`\nGuardian verification harness — ${pages.length} built pages\n${
     /serving all of washington/i,
     /frequently asked questions/i,
     /every alert is visually confirmed/i,
+    // ---- component-rendered boilerplate -----------------------------------
+    // These blocks are SUPPOSED to be identical on every page that carries them.
+    // CONTENT_BRIEF puts boilerplate in components precisely so it is never retyped
+    // into bodies, and rewording a licensing boundary or a report spec page by page
+    // would make it less precise rather than less repetitive. Flagging them buried
+    // the warnings that actually matter under ~70 lines of known-by-design noise.
+    // NOTE: this allowlists component output only. Repeated prose in a page body is
+    // still flagged, which is the signal this check exists to give.
+    /every location the dog alerted on/i,            // ReportBlock
+    /visual confirmation result for each alert/i,    // ReportBlock
+    /dated and signed by the handler who performed/i,// ReportBlock
+    /written all-clear where nothing was found/i,    // ReportBlock
+    /retained on file so it can be reissued/i,       // ReportBlock
+    /meet the detection dogs/i,                      // TeamBlock
+    /we do not treat, and we will not recommend/i,   // ScopeLimits
+    /we do not promise elimination/i,                // ScopeLimits
   ];
   const seen = new Map();
   for (const p of pages) {

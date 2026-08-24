@@ -7,6 +7,8 @@ import WiringNav from '../../../components/WiringNav.astro';
 import Faq from '../../../components/Faq.astro';
 import Cta from '../../../components/Cta.astro';
 import MdBody from '../../../components/MdBody.astro';
+import ScopeLimits from '../../../components/ScopeLimits.astro';
+import LegalBasis from '../../../components/LegalBasis.astro';
 import { cities } from '../../../data/cities';
 import { wireCity } from '../../../lib/links';
 import { resolve } from '../../../lib/body';
@@ -64,6 +66,8 @@ const wiring = wireCity(c.slug);
 
     <TeamBlock />
     <MdBody entry={r.body} />
+    <LegalBasis />
+    <ScopeLimits />
     <WiringNav wiring={wiring} />
     <Faq faqs={r.faqs} />
   </div>

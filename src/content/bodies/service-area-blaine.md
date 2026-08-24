@@ -253,15 +253,6 @@ service area to deliver that in. The programme structure is at
 
 ## What we will not do
 
-We do not treat, and we will not recommend a treatment method, product or active ingredient.
-That is separately licensed work in Washington under RCW 15.58.210 and we do not hold that
-licence. When we confirm something you engage a licensed applicator of your choosing, and we
-take nothing from that referral. The reasoning is at
-[why independence is the product](/independent-detection/).
-
-We do not promise elimination, because we do not perform it. Where the word guarantee appears
-it is a defined term with written conditions covering our process rather than your outcome,
-set out at [our guarantee](/our-guarantee/).
 
 And we will not tell you a clean result certifies a unit. It states what was searched on a
 date and that nothing was found, which is genuinely useful and is not the same claim. If you

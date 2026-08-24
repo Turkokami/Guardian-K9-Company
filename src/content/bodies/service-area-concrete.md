@@ -106,11 +106,6 @@ data as well as a lower price.
 
 State law, with nothing added locally.
 
-**RCW 59.18.060(4)** requires a landlord to provide a reasonable pest control programme at
-the initiation of a tenancy and, other than in a single-family residence, to control
-infestation during the tenancy except where the tenant caused it. **RCW 59.18.130** is the
-route to tenant cost liability where causation is established. **RCW 59.18.150** requires at
-least two days written notice to enter and inspect a tenanted unit.
 
 Concrete adds no municipal provision naming bed bugs, and neither does the rest of Skagit.
 Seattle is the statewide outlier, with bed bugs named explicitly and penalties running from
@@ -145,8 +140,8 @@ you did not need to spend gets one job from you. This is also the practical reas
 visits are the main way this works up here.
 
 If you do need a document specifically, that is a different question from needing a search,
-and it is usually the answer when there is a dispute, an insurer or a purchaser involved. The
-standard the document is held to is at
+and it is usually the answer when there is a dispute, an insurer or a purchaser involved.
+What such a document has to contain is at
 [what makes a report defensible](/compliance/what-a-defensible-report-contains/).
 
 ## Does the river matter?
@@ -248,19 +243,10 @@ a series of separate visits by a wide margin. The programme structure is at
 
 ## What we will not do
 
-We do not treat, and we will not recommend a treatment method, product or active ingredient.
-That is separately licensed work in Washington under RCW 15.58.210 and we do not hold that
-licence. When we confirm something you engage a licensed applicator of your own choosing, and
-we take nothing from that referral. The reasoning is at
-[why independence is the product](/independent-detection/).
-
-We do not promise elimination, because we do not perform it. Where the word guarantee appears
-it is a defined term with written conditions covering our process rather than your outcome,
-set out at [our guarantee](/our-guarantee/).
 
 And we will not quote you a same-day date up this valley. The drive is what it is, and a
-company that pretends otherwise is either going to cancel on you or has not done the sum. The
-full map of where we are fast and where we are not is at [where we work](/service-area/).
+company that pretends otherwise is either going to cancel on you or has not done the sum.
+Where we are quick and where we are not is set out at [where we work](/service-area/).
 
 There is a version of this page we could have written instead, promising rapid response and
 full coverage in language indistinguishable from the corridor pages. It would have read better

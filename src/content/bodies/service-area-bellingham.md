@@ -66,11 +66,6 @@ already in the place where such documents live.
 
 The landlord, under state law, with the two carve-outs that always apply.
 
-**RCW 59.18.060(4)** requires a landlord to provide a reasonable pest control programme at
-the start of a tenancy and, other than in a single-family residence, to control
-infestation during the tenancy except where the tenant caused it. **RCW 59.18.130** sets
-out tenant duties and is the source of tenant liability for extermination costs where the
-tenant is the cause.
 
 Bellingham does not add a municipal provision naming bed bugs specifically. Seattle does,
 through SMC 22.206.160.A.3 and Director's Rule 2-88, with penalties running from $150 to
@@ -235,7 +230,7 @@ The sequence that tends to hold up later is this:
 1. Record the report in writing, with the date and the unit, before anything else happens.
 2. Ask what was seen rather than what was felt. Live insects, cast skins, eggs or dark
    staining along seams and bed frames are evidence. Bites on their own are not.
-3. Serve entry notice properly under RCW 59.18.150 for whatever inspection follows. A
+3. Give proper written notice of entry under RCW 59.18.150 before anyone inspects. A
    rushed entry creates a second dispute alongside the first one.
 4. Screen the reporting unit **and** a sensible set of neighbours, not the reporting unit
    alone. Which neighbours depends on how the building is built.
@@ -249,16 +244,6 @@ piece on the first part of this at
 
 ## What we will not do here
 
-We do not treat, and we will not recommend a treatment method, a product or an active
-ingredient. That is separately licensed work in this state and we do not hold that
-licence. When we confirm something, you engage a licensed applicator of your own choosing
-and we take nothing from that referral. That independence is the entire reason the report
-is worth reading, and it is explained at
-[why independence is the product](/independent-detection/).
-
-We do not promise elimination, because we do not perform it. Where we use the word
-guarantee it is a defined term with written conditions, set out at
-[our guarantee](/our-guarantee/), and it describes our process rather than your outcome.
 
 And we do not claim to be quick everywhere. Bellingham gets our fastest turnaround
 because this is a prime zone. If you want the whole map, including the places where we are
